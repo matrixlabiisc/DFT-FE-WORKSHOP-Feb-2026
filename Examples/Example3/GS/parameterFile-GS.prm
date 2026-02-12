@@ -1,0 +1,63 @@
+set SOLVER MODE        = GS
+set USE GPU            = true
+set VERBOSITY          = 4
+set MEM OPT MODE       = true
+
+subsection Geometry
+  set NATOMS                   = 1000
+  set NATOM TYPES              = 1
+  set ATOMIC COORDINATES FILE  = coordinates.inp
+  set DOMAIN VECTORS FILE      = domainVectors.inp
+  subsection Optimization
+    set ION FORCE    = true
+    set CELL STRESS  = true
+  end
+end
+
+subsection Poisson problem parameters
+  set GPU MODE            = true
+  set MAXIMUM ITERATIONS  = 20000
+  set TOLERANCE           = 1e-10
+end
+
+subsection Boundary conditions
+  set PERIODIC1  = true
+  set PERIODIC2  = true
+  set PERIODIC3  = true
+end
+
+subsection Finite element mesh parameters
+  set POLYNOMIAL ORDER                = 4
+  set POLYNOMIAL ORDER ELECTROSTATICS = 9
+  set USE HIGH QUADRATURE RULE        = true
+  subsection Auto mesh generation parameters
+    set MESH SIZE AROUND ATOM  = 1.8
+  end
+end
+
+subsection DFT functional parameters
+  set EXCHANGE CORRELATION TYPE         = GGA-PBE
+  set PSEUDOPOTENTIAL CALCULATION       = true
+  set PSEUDOPOTENTIAL FILE NAMES LIST   = pseudo_light.inp
+  set INITAL FRACTIONAL OCCUPANCY LIST  = initOccupancy.inp
+end
+
+subsection SCF parameters
+  set TEMPERATURE             = 500
+  set TOLERANCE               = 1e-6
+  set USE APPROX DELTA MATRIX = true
+  subsection Eigen-solver parameters
+    set USE APPROXIMATE OVERLAP MATRIX    = false
+    set USE SINGLE PREC CHEBY             = true
+    set OVERLAP COMPUTE COMMUN CHEBY      = true
+    set TENSOR OP TYPE SINGLE PREC CHEBY  = TF32
+    set COMMUN PREC CHEBY                 = BF16
+  end
+end
+
+subsection GPU
+  set AUTO GPU BLOCK SIZES        = true
+  set FINE GRAINED GPU TIMINGS    = true
+  set SUBSPACE ROT FULL CPU MEM   = true
+  set USE ELPA GPU KERNEL         = true
+end

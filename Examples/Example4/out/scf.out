@@ -1,0 +1,1591 @@
+==========================================================================================================
+==========================================================================================================
+			Welcome to the Open Source program DFT-FE version	1.1.0-pre		        
+This is a C++ code for materials modeling from first principles using Kohn-Sham density functional theory.
+This is a real-space code for periodic, semi-periodic and non-periodic pseudopotential
+and all-electron calculations, and is based on adaptive finite-element discretization.
+For further details, and citing, please refer to our website: https://sites.google.com/umich.edu/dftfe
+==========================================================================================================
+ DFT-FE Mentors and Development leads (alphabetically) :									
+														
+ Sambit Das               - University of Michigan, USA
+ Vikram Gavini            - University of Michigan, USA
+ Phani Motamarri          - Indian Institute of Science, India
+ (A complete list of the many authors that have contributed to DFT-FE can be found in the authors file)
+==========================================================================================================
+ 	     Copyright (c) 2017-2025 The Regents of the University of Michigan and DFT-FE authors         
+ 			DFT-FE is published under [LGPL v2.1 or newer] 				
+==========================================================================================================
+==========================================================================================================
+ DFT-FE branch: workshopBranch, commit: a18af6ab64d1aabd7281b89530763d1703e62543
+ compiled with GPU support, using CUDA, with device-aware MPI support, with NCCL support, with OpenMP support, with 64 bit integers, and with HIGHERQUAD_PSP
+==========================================================================================================
+set RESTART        = false
+set RESTART FOLDER = restartFolder
+set SOLVER MODE    = GS
+set USE GPU        = true
+set VERBOSITY      = 1
+subsection NEB
+  set ALLOW IMAGE FREEZING             = false
+  set BFGS STEP METHOD                 = QN
+  set ION RELAX FLAGS FILE             =
+  set LBFGS HISTORY                    = 5
+  set MAXIMUM ION UPDATE STEP          = 0.5
+  set MAXIMUM NUMBER OF NEB ITERATIONS = 100
+  set MAXIMUM SPRING CONSTANT          = 5e-3
+  set MAX LINE SEARCH ITER             = 5
+  set MINIMUM SPRING CONSTANT          = 2e-3
+  set NEB COORDINATES FILE             =
+  set NEB DOMAIN VECTORS FILE          =
+  set NEB OPT SOLVER                   = LBFGS
+  set NUMBER OF IMAGES                 = 7
+  set PATH THRESHOLD                   = 5e-4
+end
+set KEEP SCRATCH FOLDER                             = false
+set MEM OPT MODE                                    = false
+set REPRODUCIBLE OUTPUT                             = false
+set WRITE STRUCTURE ENERGY FORCES DATA POST PROCESS = false
+subsection Boundary conditions
+  set APPLY NEUMANN BOUNDARY CONDITION   = false
+  set CONSTRAINTS FROM SERIAL DOFHANDLER = false
+  set CONSTRAINTS PARALLEL CHECK         = false
+  set FLOATING NUCLEAR CHARGES           = true
+  set MULTIPOLE BOUNDARY CONDITIONS      = true
+  set PERIODIC1                          = false
+  set PERIODIC2                          = false
+  set PERIODIC3                          = false
+  set POINT WISE DIRICHLET CONSTRAINT    = false
+  set SELF POTENTIAL RADIUS              = 0.0
+  set SMEARED NUCLEAR CHARGES            = true
+end
+subsection Brillouin zone k point sampling options
+  set USE GROUP SYMMETRY         = false
+  set USE TIME REVERSAL SYMMETRY = false
+  set kPOINT RULE FILE           =
+  subsection Monkhorst-Pack (MP) grid generation
+    set SAMPLING POINTS 1 = 1
+    set SAMPLING POINTS 2 = 1
+    set SAMPLING POINTS 3 = 1
+    set SAMPLING SHIFT 1  = 0
+    set SAMPLING SHIFT 2  = 0
+    set SAMPLING SHIFT 3  = 0
+  end
+end
+subsection DFT functional parameters
+  set AUX BASIS DATA                                    =
+  set AUX BASIS TYPE                                    = FE
+  set EXCHANGE CORRELATION TYPE                         = GGA-PBE
+  set INITAL FRACTIONAL OCCUPANCY LIST                  =
+  set MODEL XC INPUT FILE                               =
+  set NET CHARGE                                        = 0.0
+  set NONCOLLINEAR SPIN                                 = false
+  set PAW GPU XC EVALUATION                             = true
+  set PSEUDOPOTENTIAL CALCULATION                       = true
+  set PSEUDOPOTENTIAL FILE NAMES LIST                   = pseudo.inp
+  set PSEUDO TESTS FLAG                                 = false
+  set PSP CUTOFF IMAGE CHARGES                          = 15.0
+  set SPIN POLARIZATION                                 = 1
+  set SPIN-ORBIT COUPLING                               = false
+  set TOTAL MAGNETIZATION                               = 0.0
+  set USE ATOMIC MAGNETIZATION GUESS FOR CONSTRAINT MAG = false
+  set USE LIBXC FOR XC FUNCTIONAL EVALUATION            = true
+  subsection CONFINING POTENTIAL parameters
+    set APPLY CONFINING POTENTIAL = false
+    set C PARAM                   = 1.0
+    set INNER RADIUS              = 17.0
+    set OUTER RADIUS              = 20.0
+    set W PARAM                   = 1.0
+  end
+  subsection Dispersion Correction
+    set CN CUTOFF                  = 40.0
+    set D3 ATM                     = false
+    set D3 DAMPING TYPE            = 3
+    set D4 MBD                     = false
+    set DAMPING PARAMETERS FILE    =
+    set DISPERSION CORRECTION TYPE = 0
+    set THREE BODY CUTOFF          = 40.0
+    set TWO BODY CUTOFF            = 94.8683298050514
+  end
+  subsection Hubbard Parameters
+    set HUBBARD PARAMETERS FILE =
+  end
+end
+subsection Finite element mesh parameters
+  set DENSITY QUADRATURE RULE          = 0
+  set LOCAL POTENTIAL QUADRATURE COPY  = 0
+  set LOCAL POTENTIAL QUADRATURE ORDER = 0
+  set NON LOCAL PSP QUADRATURE COPY    = 0
+  set NON LOCAL PSP QUADRATURE ORDER   = 0
+  set NUCLEAR CHARGE QUADRATURE COPY   = 0
+  set NUCLEAR CHARGE QUADRATURE ORDER  = 0
+  set POLYNOMIAL ORDER                 = 6
+  set POLYNOMIAL ORDER DENSITY NODAL   = 0
+  set POLYNOMIAL ORDER ELECTROSTATICS  = 0
+  set USE HIGH QUADRATURE RULE         = true
+  subsection Auto mesh generation parameters
+    set ATOM BALL RADIUS                  = 4
+    set AUTO ADAPT BASE MESH SIZE         = true
+    set BASE MESH SIZE                    = 0.0
+    set GAUSSIAN CONSTANT FORCE GENERATOR = 0.75
+    set GAUSSIAN ORDER FORCE GENERATOR    = 4.0
+    set GAUSSIAN ORDER MOVE MESH TO ATOMS = 4.0
+    set INNER ATOM BALL RADIUS            = 0.0
+    set MESH SIZES FILE                   =
+    set MESH SIZE AROUND ATOM             = 0.8
+    set MESH SIZE AT ATOM                 = 0.0
+    set NUM LEVELS                        = 10
+    set TOP FRAC                          = 0.1
+    set USE FLAT TOP GENERATOR            = false
+  end
+end
+subsection FunctionalTest
+  set TEST NAME =
+end
+subsection GPU
+  set AUTO GPU BLOCK SIZES         = true
+  set FINE GRAINED GPU TIMINGS     = false
+  set SUBSPACE ROT FULL CPU MEM    = true
+  set USE DCCL                     = false
+  set USE ELPA GPU KERNEL          = false
+  set USE GPUDIRECT MPI ALL REDUCE = false
+end
+subsection Geometry
+  set ATOMIC COORDINATES FILE      = coordinates.inp
+  set ATOMIC DISP COORDINATES FILE =
+  set DOMAIN VECTORS FILE          = domainVectors.inp
+  set NATOMS                       = 30
+  set NATOM TYPES                  = 2
+  subsection Optimization
+    set BFGS STEP METHOD           = QN
+    set CELL CONSTRAINT TYPE       = 12
+    set CELL OPT SOLVER            = LBFGS
+    set CELL STRESS                = false
+    set FORCE TOL                  = 1e-4
+    set ION FORCE                  = true
+    set ION OPT SOLVER             = LBFGS
+    set ION RELAX FLAGS FILE       =
+    set LBFGS HISTORY              = 5
+    set MAXIMUM CELL UPDATE STEP   = 0.1
+    set MAXIMUM ION UPDATE STEP    = 0.5
+    set MAXIMUM OPTIMIZATION STEPS = 300
+    set MAXIMUM STAGGERED CYCLES   = 300
+    set MAX LINE SEARCH ITER       = 5
+    set NON SELF CONSISTENT FORCE  = false
+    set OPTIMIZATION MODE          = ION
+    set REUSE DENSITY              = 1
+    set REUSE WFC                  = true
+    set STRESS TOL                 = 1e-6
+    set USE PRECONDITIONER         = false
+  end
+end
+subsection Helmholtz problem parameters
+  set ABSOLUTE TOLERANCE HELMHOLTZ = 1e-10
+  set MAXIMUM ITERATIONS HELMHOLTZ = 10000
+end
+subsection Molecular Dynamics
+  set ATOMIC MASSES FILE          =
+  set BOMD                        = false
+  set EXTRAPOLATE DENSITY         = 0
+  set MAX JACOBIAN RATIO FACTOR   = 1.5
+  set MAX WALL TIME               = 2592000.0
+  set NUMBER OF STEPS             = 1000
+  set STARTING TEMPERATURE        = 300.0
+  set TEMPERATURE CONTROLLER TYPE = NO_CONTROL
+  set THERMOSTAT TIME CONSTANT    = 100
+  set TIME STEP                   = 0.5
+  set TRACKING ATOMIC NO          = 0
+end
+subsection Parallelization
+  set BAND PARAL OPT           = true
+  set MPI ALLREDUCE BLOCK SIZE = 100.0
+  set NPBAND                   = 1
+  set NPKPT                    = 1
+end
+subsection Poisson problem parameters
+  set GPU MODE           = true
+  set MAXIMUM ITERATIONS = 20000
+  set TOLERANCE          = 1e-10
+  set VSELF GPU MODE     = true
+end
+subsection Post-processing Options
+  set DELTA ENERGY                       = 0.01
+  set DOS SMEAR TEMPERATURE              = 500
+  set PRINT KINETIC ENERGY               = false
+  set READ ATOMIC WFC PDOS FROM PSP FILE = false
+  set WRITE DENSITY FE MESH              = false
+  set WRITE DENSITY OF STATES            = false
+  set WRITE DENSITY QUAD DATA            = false
+  set WRITE LOCALIZATION LENGTHS         = false
+  set WRITE LOCAL DENSITY OF STATES      = false
+  set WRITE PROJECTED DENSITY OF STATES  = false
+  set WRITE WFC FE MESH                  = false
+end
+subsection SCF Checkpointing and Restart
+  set LOAD DELTA SINVERSE DATA            = false
+  set LOAD DIJ DATA                       = false
+  set LOAD QUAD DATA                      = false
+  set MAG PHI                             = 0
+  set MAG THETA                           = 0
+  set RESTART NONCOLLINEAR FROM COLLINEAR = false
+  set RESTART SP FROM NO SP               = false
+  set SAVE DELTA SINVERSE DATA            = false
+  set SAVE DIJ DATA                       = false
+  set SAVE QUAD DATA                      = true
+end
+subsection SCF parameters
+  set ADAPT ANDERSON MIXING PARAMETER         = false
+  set COMPUTE ENERGY EACH ITER                = false
+  set CONSTRAINT MAGNETIZATION                = false
+  set ENERGY TOLERANCE                        = 1e-07
+  set FIXED OCCUPANCY FILE                    =
+  set INVERSE KERKER MIXING PARAMETER         = 0.0
+  set KERKER MIXING PARAMETER                 = 0.05
+  set MAXIMUM ITERATIONS                      = 200
+  set MIXING HISTORY                          = 10
+  set MIXING METHOD                           = ANDERSON_WITH_RESTA
+  set MIXING PARAMETER                        = 0.3
+  set NUMBER OF ATOM CENTERED SHAPE FUNCTIONS = 3
+  set PURE STATE                              = false
+  set RESTA FERMI WAVEVECTOR                  = 5.81
+  set RESTA SCREENING LENGTH                  = 6.61
+  set SPHERICAL QUADRATURE                    = 0
+  set SPIN MIXING ENHANCEMENT FACTOR          = 1.0
+  set STARTING WFC                            = RANDOM
+  set TEMPERATURE                             = 10
+  set TOLERANCE                               = 1e-6
+  set USE APPROX DELTA MATRIX                 = false
+  set USE ENERGY RESIDUAL METRIC              = false
+  set USE FIXED OCCUPANCY                     = false
+  set USE GRAD PHI MIXING                     = false
+  set USE TOTAL CHARGE DENSITY MIXING         = true
+  subsection Eigen-solver parameters
+    set ADAPTIVE USAGE BELOW FP32 PREC                       = true
+    set ALGO                                                 = NORMAL
+    set ALLOW MULTIPLE PASSES POST FIRST SCF                 = true
+    set CHEBYSHEV FILTER TOLERANCE                           = 0.0
+    set CHEBYSHEV POLYNOMIAL DEGREE                          = 0
+    set CHEBYSHEV POLYNOMIAL DEGREE SCALING FACTOR FIRST SCF = 1.34
+    set CHEBY WFC BLOCK SIZE                                 = 200
+    set COMMUN PREC CHEBY                                    = STANDARD
+    set HIGHEST STATE OF INTEREST FOR CHEBYSHEV FILTERING    = 0
+    set NUMBER OF CORE EIGEN STATES FOR MIXED PREC RR        = 0
+    set NUMBER OF KOHN-SHAM WAVEFUNCTIONS                    = 0
+    set ORTHOGONALIZATION TYPE                               = Auto
+    set OVERLAP COMPUTE COMMUN CHEBY                         = true
+    set OVERLAP COMPUTE COMMUN ORTHO RR                      = true
+    set RESTRICT TO SINGLE FILTER PASS                       = false
+    set REUSE LANCZOS UPPER BOUND                            = false
+    set SCALAPACKPROCS                                       = 0
+    set SCALAPACK BLOCK SIZE                                 = 0
+    set SUBSPACE PROJ SHEP GPU                               = false
+    set SUBSPACE ROT DOFS BLOCK SIZE                         = 10000
+    set TENSOR OP TYPE SINGLE PREC CHEBY                     = FP32
+    set USE APPROXIMATE OVERLAP MATRIX                       = true
+    set USE ELPA                                             = true
+    set USE MIXED PREC CGS SR                                = false
+    set USE MIXED PREC COMMUN ONLY XTOX XTHX                 = false
+    set USE MIXED PREC RR_SR                                 = false
+    set USE MIXED PREC XTHX                                  = false
+    set USE MIXED PREC XTOX                                  = false
+    set USE RESIDUAL CHFSI                                   = true
+    set USE SINGLE PREC CHEBY                                = false
+    set WFC BLOCK SIZE                                       = 400
+  end
+  subsection LOW RANK DIELECM PRECOND
+    set ADAPTIVE RANK REL TOL            = 0.3
+    set BETA TOL                         = 0.1
+    set ESTIMATE JAC CONDITION NO        = false
+    set METHOD SUB TYPE                  = ADAPTIVE
+    set POISSON SOLVER ABS TOL           = 1e-6
+    set STARTING NORM LARGE DAMPING      = 2.0
+    set USE SINGLE PREC DENSITY RESPONSE = false
+  end
+end
+Setting ORTHOGONALIZATION TYPE=CGS for pseudopotential calculations 
+=================================MPI Parallelization=========================================
+Total number of MPI tasks: 48
+k-point parallelization processor groups: 1
+Band parallelization processor groups: 1
+Number of MPI tasks for finite-element domain decomposition: 48
+============================================================================================
+Threads per MPI task: 8
+number of atoms: 30
+number of atoms types: 2
+ Warning: User has requested the number of Kohn-Sham wavefunctions to be less than orequal to the value required for the number of electrons in the system.Setting the Kohn-Sham wavefunctions to the required value with a 20 percent bufferto avoid convergence issues in SCF iterations
+ Setting the number of Kohn-Sham wave functions to be 301
+ Setting the number of Kohn-Sham wave functions for Device run to be: 330
+ Setting CHEBY WFC BLOCK SIZE for Device run to be 110
+ Setting WFC BLOCK SIZE for Device run to be 110
+
+Reading Pseudo-potential data for each atom from the list given in : pseudo.inp
+ Reading Pseudopotential File: FeSR.upf, with atomic number: 26, has data for nonlinear core-correction, and has no SOC
+ Reading Pseudopotential File: PtSR.upf, with atomic number: 78, has data for nonlinear core-correction, and has no SOC
+Atleast one atom has pseudopotential with nonlinear core correction
+Atomic system initialization, wall time: 0.493291s.
+-----------Simulation Domain bounding vectors (lattice vectors in fully periodic case)-------------
+v1 : 5.000000000000000000e+01 0.000000000000000000e+00 0.000000000000000000e+00
+v2 : 0.000000000000000000e+00 5.000000000000000000e+01 0.000000000000000000e+00
+v3 : 0.000000000000000000e+00 0.000000000000000000e+00 5.000000000000000000e+01
+-----------------------------------------------------------------------------------------
+------------Cartesian coordinates of atoms (origin at center of domain)------------------
+AtomId 0:  -4.991456849000000418e+00 4.991421773799999961e+00 -3.582315589699999858e+00
+AtomId 1:  -1.815000000000000040e-07 -1.868699999999999998e-06 -3.496100798600000115e+00
+AtomId 2:  -2.359999999999999957e-08 -5.353144701399999761e+00 -3.328261289099999853e+00
+AtomId 3:  4.991456003099999705e+00 4.991421640899999623e+00 -3.582315417099999788e+00
+AtomId 4:  4.991469197499999844e+00 -4.991426487900000097e+00 -3.582293669999999874e+00
+AtomId 5:  -4.184999999999999954e-07 5.353151852499999919e+00 -3.328260483499999811e+00
+AtomId 6:  -4.991469179100000098e+00 -4.991426445700000158e+00 -3.582293915999999800e+00
+AtomId 7:  5.353204671500000345e+00 1.139500000000000059e-06 -3.328254727600000074e+00
+AtomId 8:  -5.353205145999999637e+00 1.173100000000000042e-06 -3.328254815599999805e+00
+AtomId 9:  2.551369201300000000e+00 -2.551324566199999921e+00 9.290000000000000469e-08
+AtomId 10:  7.183176549699999747e+00 2.879630838399999782e+00 7.959999999999999809e-08
+AtomId 11:  -2.551369502500000053e+00 -2.551324511899999870e+00 1.509999999999999955e-08
+AtomId 12:  7.183196145900000218e+00 -2.879608020400000079e+00 1.362999999999999963e-07
+AtomId 13:  -7.183177274000000168e+00 2.879630873800000046e+00 -9.649999999999999722e-08
+AtomId 14:  -2.879630951899999847e+00 7.183092137500000085e+00 -2.089999999999999855e-08
+AtomId 15:  2.879615037000000211e+00 -7.183102982400000336e+00 7.639999999999999591e-08
+AtomId 16:  -2.551363035400000090e+00 2.551316431600000101e+00 3.700000000000000044e-09
+AtomId 17:  2.879629939400000005e+00 7.183092192900000228e+00 1.740000000000000030e-08
+AtomId 18:  -2.879615334999999998e+00 -7.183102904200000083e+00 -1.000000000000000021e-08
+AtomId 19:  -7.183196413000000113e+00 -2.879608262000000085e+00 -9.279999999999999718e-08
+AtomId 20:  2.551362303399999920e+00 2.551316444499999836e+00 7.140000000000000407e-08
+AtomId 21:  -4.991456954900000298e+00 4.991421786100000091e+00 3.582315423099999840e+00
+AtomId 22:  5.353204685499999727e+00 1.189500000000000004e-06 3.328254845400000050e+00
+AtomId 23:  -2.739999999999999918e-07 -1.867200000000000097e-06 3.496100730999999850e+00
+AtomId 24:  4.991455982299999761e+00 4.991421744800000226e+00 3.582315434599999904e+00
+AtomId 25:  4.991469089199999765e+00 -4.991426475299999943e+00 3.582293824999999821e+00
+AtomId 26:  -4.790999999999999954e-07 5.353151936799999788e+00 3.328260443000000013e+00
+AtomId 27:  -1.326999999999999905e-07 -5.353144794600000367e+00 3.328261310199999823e+00
+AtomId 28:  -4.991469307700000080e+00 -4.991426446400000216e+00 3.582293776199999780e+00
+AtomId 29:  -5.353205347900000355e+00 1.178400000000000017e-06 3.328254646200000000e+00
+-----------------------------------------------------------------------------------------
+Libxc version: 7.0.0
+X Functional: J. P. Perdew, K. Burke, and M. Ernzerhof.,  Phys. Rev. Lett. 77, 3865 (1996) (DOI 10.1103/PhysRevLett.77.3865)
+C Functional: J. P. Perdew, K. Burke, and M. Ernzerhof.,  Phys. Rev. Lett. 77, 3865 (1996) (DOI 10.1103/PhysRevLett.77.3865)
+
+Finite element mesh information
+-------------------------------------------------
+FE interpolating polynomial order for Kohn-Sham eigenvalue problem: 6
+FE interpolating polynomial order for electrostatics solve: 6
+FE interpolating polynomial order for nodal electron density computation: 8
+quadrature rule for electron density and kinetic energy density computation: 9
+number of elements: 14232
+number of degrees of freedom for the Kohn-Sham eigenvalue problem : 3211441
+Minimum mesh size: 7.812500000000000000e-01
+-------------------------------------------------
+
+-----------------------------------------------------------------------------
+Rough estimate of peak memory requirement (RAM) total: 5.791281696000000068e+01 GB.
+Rough estimate of peak memory requirement (RAM) per MPI task: 1.206517019999999940e+00 GB.
+DFT-FE Message: many of the memory optimizations implemented
+in DFT-FE are useful only for larger system sizes.
+-----------------------------------------------------------------------------
+Determining the ball radius around the atom for nuclear self-potential solve... 
+...Adaptively set ball radius: 4.000000000000000000e+00
+
+Setting initial guess for wavefunctions....
+Number of wavefunctions generated randomly to be used as initial guess for starting the SCF : 330
+=============================================================================================================================
+number of electrons: 5.160000000000000000e+02
+number of eigen values: 330
+=============================================================================================================================
+
+Reading initial guess for electron-density.....
+Initial total charge after normalization: 5.160000000000000000e+02
+initialize density, wall time: 0.566243s.
+
+Pseudopotential initalization....
+
+Reading data for core electron-density to be used in nonlinear core-correction.....
+KSDFT problem initialization, wall time: 43.8953s.
+Nuclear self-potential solve, wall time: 3.70371s.
+Init local PSP, wall time: 8.06458s.
+
+************************Begin Self-Consistent-Field Iteration:  1 ***********************
+Fermi Energy computed: -1.876985306896046257e-01
+Absolute magnetization: 5.037527123506768589e+01
+Net magnetization     : 4.999998686082912513e+01
+***********************Self-Consistent-Field Iteration:  1 complete**********************
+Wall time for the above scf iteration: 2.048393199599999903e+01 seconds
+Number of Chebyshev filtered subspace iterations: 12
+
+************************Begin Self-Consistent-Field Iteration:  2 ***********************
+Timer for computeAndersonMixingCoeff: 1.034999999660612957e-05
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 7.357077362741455406e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 4.433239653446314321e+00
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 3.177646904401307815e+00
+Fermi Energy computed: -1.887160701793854367e-01
+Absolute magnetization: 5.082560662051594846e+01
+Net magnetization     : 4.999998717052552877e+01
+***********************Self-Consistent-Field Iteration:  2 complete**********************
+Wall time for the above scf iteration: 4.489980553999999735e+00 seconds
+Number of Chebyshev filtered subspace iterations: 2
+
+************************Begin Self-Consistent-Field Iteration:  3 ***********************
+Timer for computeAndersonMixingCoeff: 3.647669000002906614e-03
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 5.464473913585323750e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 3.168145379332530709e+00
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 2.273296053762972946e+00
+Fermi Energy computed: -1.939002163507514975e-01
+Absolute magnetization: 4.908098903816271985e+01
+Net magnetization     : 4.799998932494818860e+01
+***********************Self-Consistent-Field Iteration:  3 complete**********************
+Wall time for the above scf iteration: 5.142089559000000420e+00 seconds
+Number of Chebyshev filtered subspace iterations: 3
+
+************************Begin Self-Consistent-Field Iteration:  4 ***********************
+Timer for computeAndersonMixingCoeff: 5.359847999997668921e-03
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 1.154085371225916479e+00
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 1.546364262426801695e+00
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 1.364396473937918186e+00
+Fermi Energy computed: -1.886370418025764273e-01
+Absolute magnetization: 4.929791511887017919e+01
+Net magnetization     : 4.799998983265726338e+01
+***********************Self-Consistent-Field Iteration:  4 complete**********************
+Wall time for the above scf iteration: 4.341663793999999577e+00 seconds
+Number of Chebyshev filtered subspace iterations: 2
+
+************************Begin Self-Consistent-Field Iteration:  5 ***********************
+Timer for computeAndersonMixingCoeff: 1.024430399999687324e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 4.272368046557188936e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 4.076385246739022694e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 4.175526637747294934e-01
+Fermi Energy computed: -1.866877625677390851e-01
+Absolute magnetization: 4.954025303283874848e+01
+Net magnetization     : 4.799998984152047399e+01
+***********************Self-Consistent-Field Iteration:  5 complete**********************
+Wall time for the above scf iteration: 3.142974397999999780e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration:  6 ***********************
+Timer for computeAndersonMixingCoeff: 1.170432500001084009e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 1.773610786666245387e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 1.713937590762989183e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 1.744029427448014480e-01
+Fermi Energy computed: -1.849723532624167055e-01
+Absolute magnetization: 4.955851763673459232e+01
+Net magnetization     : 4.799998994985415379e+01
+***********************Self-Consistent-Field Iteration:  6 complete**********************
+Wall time for the above scf iteration: 2.978157962000000047e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration:  7 ***********************
+Timer for computeAndersonMixingCoeff: 1.580972399999325262e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 1.232703653431107133e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 1.415365915346314396e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 1.327181029759412489e-01
+Fermi Energy computed: -1.815129519593857987e-01
+Absolute magnetization: 4.971780456307456575e+01
+Net magnetization     : 4.799998997603934470e+01
+***********************Self-Consistent-Field Iteration:  7 complete**********************
+Wall time for the above scf iteration: 2.890892634000000072e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration:  8 ***********************
+Timer for computeAndersonMixingCoeff: 2.141311699999448592e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 1.086826623296292399e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 9.184593775573006436e-02
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 1.006170894363518503e-01
+Fermi Energy computed: -1.796513655151692201e-01
+Absolute magnetization: 4.979602984564809276e+01
+Net magnetization     : 4.799998994775458527e+01
+***********************Self-Consistent-Field Iteration:  8 complete**********************
+Wall time for the above scf iteration: 3.084869526999999945e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration:  9 ***********************
+Timer for computeAndersonMixingCoeff: 3.123251200000254357e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 7.171204714453892348e-02
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 4.927921650450266255e-02
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 6.152665635705478753e-02
+Fermi Energy computed: -1.780074666182394627e-01
+Absolute magnetization: 4.985592863993828416e+01
+Net magnetization     : 4.799998994950865239e+01
+***********************Self-Consistent-Field Iteration:  9 complete**********************
+Wall time for the above scf iteration: 2.864644760000000012e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 10 ***********************
+Timer for computeAndersonMixingCoeff: 3.758913299999733226e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 2.907144006011683213e-02
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 1.544305695225579866e-02
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 2.327699116294438403e-02
+Fermi Energy computed: -1.766122153653472970e-01
+Absolute magnetization: 4.986713597850512514e+01
+Net magnetization     : 4.799998993436750538e+01
+***********************Self-Consistent-Field Iteration: 10 complete**********************
+Wall time for the above scf iteration: 2.963879860000000033e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 11 ***********************
+Timer for computeAndersonMixingCoeff: 4.467690699999593562e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 1.986567009581692578e-02
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 1.139107958218468601e-02
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 1.619261471170576130e-02
+Fermi Energy computed: -1.755062247524386554e-01
+Absolute magnetization: 4.987907320695489233e+01
+Net magnetization     : 4.799998993482680731e+01
+***********************Self-Consistent-Field Iteration: 11 complete**********************
+Wall time for the above scf iteration: 2.972514563999999915e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 12 ***********************
+Timer for computeAndersonMixingCoeff: 4.376520199998878979e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 1.251241976458025359e-02
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 8.047493360592947176e-03
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 1.051957218126873574e-02
+Fermi Energy computed: -1.742159672318497055e-01
+Absolute magnetization: 4.989264995513899237e+01
+Net magnetization     : 4.799998993500842204e+01
+***********************Self-Consistent-Field Iteration: 12 complete**********************
+Wall time for the above scf iteration: 2.989993682000000152e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 13 ***********************
+Timer for computeAndersonMixingCoeff: 4.676502699999218748e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 8.113815697587649020e-03
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 4.530463607789960920e-03
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 6.571115037645017948e-03
+Fermi Energy computed: -1.733444260016575034e-01
+Absolute magnetization: 4.989603567529745476e+01
+Net magnetization     : 4.799998993535741931e+01
+***********************Self-Consistent-Field Iteration: 13 complete**********************
+Wall time for the above scf iteration: 2.850149923000000030e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 14 ***********************
+Timer for computeAndersonMixingCoeff: 4.205611000000430977e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 6.696668035191346603e-03
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 3.341405864973198952e-03
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 5.291991871121440837e-03
+Fermi Energy computed: -1.726147002799897634e-01
+Absolute magnetization: 4.989718203448001788e+01
+Net magnetization     : 4.799998993454060781e+01
+***********************Self-Consistent-Field Iteration: 14 complete**********************
+Wall time for the above scf iteration: 2.976423301000000077e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 15 ***********************
+Timer for computeAndersonMixingCoeff: 4.442214899999896716e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 3.828334369913906441e-03
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 1.734729471905346572e-03
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 2.971988424318061650e-03
+Fermi Energy computed: -1.722496207391586709e-01
+Absolute magnetization: 4.989718644400984715e+01
+Net magnetization     : 4.799998993388504687e+01
+***********************Self-Consistent-Field Iteration: 15 complete**********************
+Wall time for the above scf iteration: 2.761757177999999868e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 16 ***********************
+Timer for computeAndersonMixingCoeff: 4.246685000001093613e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 3.051462428473353163e-03
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 1.227588786159731875e-03
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 2.325768387037885875e-03
+Fermi Energy computed: -1.717464948290682025e-01
+Absolute magnetization: 4.989667035238683468e+01
+Net magnetization     : 4.799998993338444819e+01
+***********************Self-Consistent-Field Iteration: 16 complete**********************
+Wall time for the above scf iteration: 2.995150152999999982e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 17 ***********************
+Timer for computeAndersonMixingCoeff: 4.372935799997890172e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 2.539173759594312834e-03
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 9.700235301512558821e-04
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 1.922023547001885761e-03
+Fermi Energy computed: -1.705281528802192748e-01
+Absolute magnetization: 4.989615681543292425e+01
+Net magnetization     : 4.799998993225698030e+01
+***********************Self-Consistent-Field Iteration: 17 complete**********************
+Wall time for the above scf iteration: 2.711656485999999866e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 18 ***********************
+Timer for computeAndersonMixingCoeff: 4.484609799999361712e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 1.744011244882016963e-03
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 6.071800834702636030e-04
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 1.305802985912859386e-03
+Fermi Energy computed: -1.699859356178911318e-01
+Absolute magnetization: 4.989530608711704929e+01
+Net magnetization     : 4.799998993180983575e+01
+***********************Self-Consistent-Field Iteration: 18 complete**********************
+Wall time for the above scf iteration: 3.135504958999999925e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 19 ***********************
+Timer for computeAndersonMixingCoeff: 4.801655700001106197e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 1.403908167663947548e-03
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 5.147246794967948093e-04
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 1.057331461490818546e-03
+Fermi Energy computed: -1.694538687254007747e-01
+Absolute magnetization: 4.989574926139740541e+01
+Net magnetization     : 4.799998993204110320e+01
+***********************Self-Consistent-Field Iteration: 19 complete**********************
+Wall time for the above scf iteration: 2.854780787000000153e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 20 ***********************
+Timer for computeAndersonMixingCoeff: 4.220810300000721327e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 1.166309928717254064e-03
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 5.365723091662307279e-04
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 9.077964234310541020e-04
+Fermi Energy computed: -1.692542692086260736e-01
+Absolute magnetization: 4.989571074129804629e+01
+Net magnetization     : 4.799998993120185276e+01
+***********************Self-Consistent-Field Iteration: 20 complete**********************
+Wall time for the above scf iteration: 2.803248527000000045e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 21 ***********************
+Timer for computeAndersonMixingCoeff: 4.421279700000013690e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 9.840221389838285475e-04
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 3.422564039786824127e-04
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 7.366949898277876368e-04
+Fermi Energy computed: -1.685047797561581295e-01
+Absolute magnetization: 4.989685394936367402e+01
+Net magnetization     : 4.799998993022560256e+01
+***********************Self-Consistent-Field Iteration: 21 complete**********************
+Wall time for the above scf iteration: 3.148077871999999999e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 22 ***********************
+Timer for computeAndersonMixingCoeff: 4.199052199999186996e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 6.755365358420524968e-04
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 3.591087926338479524e-04
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 5.409753858561499457e-04
+Fermi Energy computed: -1.683097937684723822e-01
+Absolute magnetization: 4.989696783731975671e+01
+Net magnetization     : 4.799998993050306240e+01
+***********************Self-Consistent-Field Iteration: 22 complete**********************
+Wall time for the above scf iteration: 2.847309297999999878e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 23 ***********************
+Timer for computeAndersonMixingCoeff: 4.289124900000729212e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 5.935111443614372092e-04
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 1.604837208991167976e-04
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 4.347473422315819170e-04
+Fermi Energy computed: -1.680839449755013593e-01
+Absolute magnetization: 4.989716592403638629e+01
+Net magnetization     : 4.799998993025877070e+01
+***********************Self-Consistent-Field Iteration: 23 complete**********************
+Wall time for the above scf iteration: 2.971901664999999859e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 24 ***********************
+Timer for computeAndersonMixingCoeff: 4.540152399999897170e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 5.296227577900878333e-04
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 1.846727611795608525e-04
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 3.966133471599645453e-04
+Fermi Energy computed: -1.677140324412350891e-01
+Absolute magnetization: 4.989703223377885166e+01
+Net magnetization     : 4.799998992950918364e+01
+***********************Self-Consistent-Field Iteration: 24 complete**********************
+Wall time for the above scf iteration: 2.747859275000000157e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 25 ***********************
+Timer for computeAndersonMixingCoeff: 4.467080999998529478e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 4.017467907518608265e-04
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 1.776893544780566887e-04
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 3.106235588089286521e-04
+Fermi Energy computed: -1.675837756165957648e-01
+Absolute magnetization: 4.989700579982648776e+01
+Net magnetization     : 4.799998992946428444e+01
+***********************Self-Consistent-Field Iteration: 25 complete**********************
+Wall time for the above scf iteration: 3.003796186000000201e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 26 ***********************
+Timer for computeAndersonMixingCoeff: 4.636973600000260376e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 3.427076990363413277e-04
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 1.616073246065348750e-04
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 2.679230247153699309e-04
+Fermi Energy computed: -1.674163049602614695e-01
+Absolute magnetization: 4.989688431108046274e+01
+Net magnetization     : 4.799998992954590449e+01
+***********************Self-Consistent-Field Iteration: 26 complete**********************
+Wall time for the above scf iteration: 2.654814239999999881e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 27 ***********************
+Timer for computeAndersonMixingCoeff: 4.469273300000509153e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 2.494662280554664382e-04
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 1.039385173285565595e-04
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 1.910976377727896481e-04
+Fermi Energy computed: -1.673118196019210691e-01
+Absolute magnetization: 4.989685685708854379e+01
+Net magnetization     : 4.799998992953288734e+01
+***********************Self-Consistent-Field Iteration: 27 complete**********************
+Wall time for the above scf iteration: 2.938518991000000025e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 28 ***********************
+Timer for computeAndersonMixingCoeff: 4.294645400000263180e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 2.032128863381893447e-04
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 6.483972318589412457e-05
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 1.508304791425148803e-04
+Fermi Energy computed: -1.672021509690938823e-01
+Absolute magnetization: 4.989690780843515228e+01
+Net magnetization     : 4.799998992943704934e+01
+***********************Self-Consistent-Field Iteration: 28 complete**********************
+Wall time for the above scf iteration: 2.671239404000000039e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 29 ***********************
+Timer for computeAndersonMixingCoeff: 4.299723799999810581e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 1.675647583618148436e-04
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 3.971081654995564625e-05
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 1.217680113903434655e-04
+Fermi Energy computed: -1.671353243813276934e-01
+Absolute magnetization: 4.989693625911687036e+01
+Net magnetization     : 4.799998992938782294e+01
+***********************Self-Consistent-Field Iteration: 29 complete**********************
+Wall time for the above scf iteration: 2.794623908999999795e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 30 ***********************
+Timer for computeAndersonMixingCoeff: 4.680282900000065638e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 1.438250134502515592e-04
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 3.979631193579538027e-05
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 1.055210427773914871e-04
+Fermi Energy computed: -1.670093028339001417e-01
+Absolute magnetization: 4.989701726777480673e+01
+Net magnetization     : 4.799998992932203379e+01
+***********************Self-Consistent-Field Iteration: 30 complete**********************
+Wall time for the above scf iteration: 2.985657237999999936e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 31 ***********************
+Timer for computeAndersonMixingCoeff: 4.383274200000641940e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 1.197557838690669539e-04
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 5.705151169547445766e-05
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 9.379851479856580825e-05
+Fermi Energy computed: -1.669946780615035875e-01
+Absolute magnetization: 4.989699846073901313e+01
+Net magnetization     : 4.799998992932089692e+01
+***********************Self-Consistent-Field Iteration: 31 complete**********************
+Wall time for the above scf iteration: 2.590432180000000084e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 32 ***********************
+Timer for computeAndersonMixingCoeff: 4.543140699999526078e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 1.132724012942475019e-04
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 5.308764058511368950e-05
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 8.845601866989960538e-05
+Fermi Energy computed: -1.669258330684650904e-01
+Absolute magnetization: 4.989704075397577299e+01
+Net magnetization     : 4.799998992926529695e+01
+***********************Self-Consistent-Field Iteration: 32 complete**********************
+Wall time for the above scf iteration: 2.839268764999999917e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 33 ***********************
+Timer for computeAndersonMixingCoeff: 3.987734699998668475e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 7.276513356869618190e-05
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 2.882786363906964609e-05
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 5.534351987930922063e-05
+Fermi Energy computed: -1.668900518055125015e-01
+Absolute magnetization: 4.989699648280921451e+01
+Net magnetization     : 4.799998992926673225e+01
+***********************Self-Consistent-Field Iteration: 33 complete**********************
+Wall time for the above scf iteration: 2.750395863000000052e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 34 ***********************
+Timer for computeAndersonMixingCoeff: 4.116300399999772708e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 6.285166272419485641e-05
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 2.138735073964119179e-05
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 4.694544854858868519e-05
+Fermi Energy computed: -1.668734814189795634e-01
+Absolute magnetization: 4.989699215912852992e+01
+Net magnetization     : 4.799998992926230557e+01
+***********************Self-Consistent-Field Iteration: 34 complete**********************
+Wall time for the above scf iteration: 2.649167907999999905e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 35 ***********************
+Timer for computeAndersonMixingCoeff: 4.625255500002367626e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 5.129771628596098496e-05
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 1.294817033241238172e-05
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 3.741063225282426920e-05
+Fermi Energy computed: -1.668512610951596864e-01
+Absolute magnetization: 4.989696597669129829e+01
+Net magnetization     : 4.799998992925441854e+01
+***********************Self-Consistent-Field Iteration: 35 complete**********************
+Wall time for the above scf iteration: 2.832500807000000176e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 36 ***********************
+Timer for computeAndersonMixingCoeff: 4.665995700000280522e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 4.416656217752430350e-05
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 1.397593057015715513e-05
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 3.275676914687232792e-05
+Fermi Energy computed: -1.668201784052793790e-01
+Absolute magnetization: 4.989696147913158342e+01
+Net magnetization     : 4.799998992924111008e+01
+***********************Self-Consistent-Field Iteration: 36 complete**********************
+Wall time for the above scf iteration: 2.681709564999999795e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 37 ***********************
+Timer for computeAndersonMixingCoeff: 4.616189099999701284e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 3.489348819076728425e-05
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 1.604052121494191257e-05
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 2.715560567328795163e-05
+Fermi Energy computed: -1.668136632058486446e-01
+Absolute magnetization: 4.989695498793382455e+01
+Net magnetization     : 4.799998992924274432e+01
+***********************Self-Consistent-Field Iteration: 37 complete**********************
+Wall time for the above scf iteration: 2.698874443999999873e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 38 ***********************
+Timer for computeAndersonMixingCoeff: 4.344928000000436441e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 3.124990459178310381e-05
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 1.318536356697473012e-05
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 2.398343542310870912e-05
+Fermi Energy computed: -1.667935001596420330e-01
+Absolute magnetization: 4.989696104145885869e+01
+Net magnetization     : 4.799998992923300989e+01
+***********************Self-Consistent-Field Iteration: 38 complete**********************
+Wall time for the above scf iteration: 2.906097399000000081e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 39 ***********************
+Timer for computeAndersonMixingCoeff: 4.473212700000317454e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 2.310769259156879340e-05
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 8.731727464197543617e-06
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 1.746723391690088140e-05
+Fermi Energy computed: -1.667779243826009450e-01
+Absolute magnetization: 4.989696348202109988e+01
+Net magnetization     : 4.799998992922651553e+01
+***********************Self-Consistent-Field Iteration: 39 complete**********************
+Wall time for the above scf iteration: 2.611225847000000044e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 40 ***********************
+Timer for computeAndersonMixingCoeff: 4.531941999999844484e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 1.751092766562590251e-05
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 6.204206974440091136e-06
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 1.313630031425274869e-05
+Fermi Energy computed: -1.667652458211190680e-01
+Absolute magnetization: 4.989696879420575470e+01
+Net magnetization     : 4.799998992921865693e+01
+***********************Self-Consistent-Field Iteration: 40 complete**********************
+Wall time for the above scf iteration: 2.886640054999999982e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 41 ***********************
+Timer for computeAndersonMixingCoeff: 4.506244200001674471e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 1.488441353032725193e-05
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 5.470313266717010433e-06
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 1.121316399099311022e-05
+Fermi Energy computed: -1.667544436080733716e-01
+Absolute magnetization: 4.989697346713646198e+01
+Net magnetization     : 4.799998992921631924e+01
+***********************Self-Consistent-Field Iteration: 41 complete**********************
+Wall time for the above scf iteration: 2.858006534999999904e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 42 ***********************
+Timer for computeAndersonMixingCoeff: 4.699343900000485519e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 1.151280032754841756e-05
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 4.189551345460682254e-06
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 8.663051190494327881e-06
+Fermi Energy computed: -1.667502376463210478e-01
+Absolute magnetization: 4.989697264970619983e+01
+Net magnetization     : 4.799998992921685215e+01
+***********************Self-Consistent-Field Iteration: 42 complete**********************
+Wall time for the above scf iteration: 2.720002452000000126e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 43 ***********************
+Timer for computeAndersonMixingCoeff: 4.786693299999456030e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 1.031706899020387091e-05
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 4.768195557857505892e-06
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 8.036715791497120104e-06
+Fermi Energy computed: -1.667467699416361748e-01
+Absolute magnetization: 4.989697129019839394e+01
+Net magnetization     : 4.799998992921393892e+01
+***********************Self-Consistent-Field Iteration: 43 complete**********************
+Wall time for the above scf iteration: 2.966306492000000183e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 44 ***********************
+Timer for computeAndersonMixingCoeff: 4.190518000001475230e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 8.634097795168504285e-06
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 2.782825061535993577e-06
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 6.414505439223137372e-06
+Fermi Energy computed: -1.667449891417245589e-01
+Absolute magnetization: 4.989696940983612450e+01
+Net magnetization     : 4.799998992921469920e+01
+***********************Self-Consistent-Field Iteration: 44 complete**********************
+Wall time for the above scf iteration: 2.725688530000000220e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 45 ***********************
+Timer for computeAndersonMixingCoeff: 4.606042300000012801e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 7.039552283696096048e-06
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 2.006328035320728085e-06
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 5.175937042710471941e-06
+Fermi Energy computed: -1.667428823917481151e-01
+Absolute magnetization: 4.989696602004698889e+01
+Net magnetization     : 4.799998992921587160e+01
+***********************Self-Consistent-Field Iteration: 45 complete**********************
+Wall time for the above scf iteration: 2.771032450999999952e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 46 ***********************
+Timer for computeAndersonMixingCoeff: 4.444473699999207383e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 5.712072204453119729e-06
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 1.475763569353938862e-06
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 4.171669149244591791e-06
+Fermi Energy computed: -1.667427339660536856e-01
+Absolute magnetization: 4.989696468279788633e+01
+Net magnetization     : 4.799998992921627661e+01
+***********************Self-Consistent-Field Iteration: 46 complete**********************
+Wall time for the above scf iteration: 3.005218689999999970e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 47 ***********************
+Timer for computeAndersonMixingCoeff: 4.691742600002157815e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 4.998647093282990670e-06
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 1.566572294251437960e-06
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 3.704093783660364073e-06
+Fermi Energy computed: -1.667431000132088004e-01
+Absolute magnetization: 4.989696518416855042e+01
+Net magnetization     : 4.799998992921715057e+01
+***********************Self-Consistent-Field Iteration: 47 complete**********************
+Wall time for the above scf iteration: 2.574546713999999792e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 48 ***********************
+Timer for computeAndersonMixingCoeff: 4.331949999999551437e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 3.710949817093627731e-06
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 1.321880027192462053e-06
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 2.785544412792369687e-06
+Fermi Energy computed: -1.667434855107765290e-01
+Absolute magnetization: 4.989696551552204795e+01
+Net magnetization     : 4.799998992921820218e+01
+***********************Self-Consistent-Field Iteration: 48 complete**********************
+Wall time for the above scf iteration: 2.692585751999999832e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 49 ***********************
+Timer for computeAndersonMixingCoeff: 4.388872600000581770e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 3.113900162685499856e-06
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 1.209512571047704887e-06
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 2.362127736035374673e-06
+Fermi Energy computed: -1.667445797792179440e-01
+Absolute magnetization: 4.989696622361000777e+01
+Net magnetization     : 4.799998992921871377e+01
+***********************Self-Consistent-Field Iteration: 49 complete**********************
+Wall time for the above scf iteration: 2.576626577999999945e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 50 ***********************
+Timer for computeAndersonMixingCoeff: 3.991447900000366644e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 2.244190345621922574e-06
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 6.905536491320201447e-07
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 1.660309406362590279e-06
+Fermi Energy computed: -1.667452094158708986e-01
+Absolute magnetization: 4.989696667025670251e+01
+Net magnetization     : 4.799998992921874219e+01
+***********************Self-Consistent-Field Iteration: 50 complete**********************
+Wall time for the above scf iteration: 2.577671511000000137e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 51 ***********************
+Timer for computeAndersonMixingCoeff: 4.544265499998800806e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 1.776064434173660787e-06
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 4.867019446706673418e-07
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 1.302168126104078748e-06
+Fermi Energy computed: -1.667457645593288795e-01
+Absolute magnetization: 4.989696667020411525e+01
+Net magnetization     : 4.799998992921906193e+01
+***********************Self-Consistent-Field Iteration: 51 complete**********************
+Wall time for the above scf iteration: 2.740251300000000168e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 52 ***********************
+Timer for computeAndersonMixingCoeff: 4.492715800000723902e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 1.542523341824703803e-06
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 3.968932762761161453e-07
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 1.126255417928642321e-06
+Fermi Energy computed: -1.667461000827246964e-01
+Absolute magnetization: 4.989696662303537522e+01
+Net magnetization     : 4.799998992921931062e+01
+***********************Self-Consistent-Field Iteration: 52 complete**********************
+Wall time for the above scf iteration: 2.723215877999999979e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 53 ***********************
+Timer for computeAndersonMixingCoeff: 4.413010399997574496e-02
+Anderson mixing parameter for Rho: 2.999999999999999889e-01
+Anderson mixing parameter for magZ: 2.999999999999999889e-01
+ANDERSON_WITH_RESTA mixing, L2 norm of electron-density difference: 1.263760803844074562e-06
+ANDERSON_WITH_RESTA mixing, L2 norm of magnetization-density difference: 2.992241963151095205e-07
+ANDERSON_WITH_RESTA mixing, L2 norm of total density difference: 9.183208831865484258e-07
+Fermi Energy computed: -1.667466726590766113e-01
+Absolute magnetization: 4.989696658616453107e+01
+Net magnetization     : 4.799998992921919694e+01
+***********************Self-Consistent-Field Iteration: 53 complete**********************
+Wall time for the above scf iteration: 2.648394001999999858e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+
+------------------------------------------------------------------------
+|  Atom |  Atomic Number | Magnetization Density |Absolute Magnetization |
+------------------------------------------------------------------------
+|     0 |             78 |              0.408367 |              0.411275 |
+|     1 |             78 |              0.238323 |              0.259071 |
+|     2 |             78 |              0.363977 |              0.371828 |
+|     3 |             78 |              0.408367 |              0.411275 |
+|     4 |             78 |              0.408363 |              0.411270 |
+|     5 |             78 |              0.363983 |              0.371834 |
+|     6 |             78 |              0.408363 |              0.411270 |
+|     7 |             78 |              0.363982 |              0.371833 |
+|     8 |             78 |              0.363982 |              0.371833 |
+|     9 |             26 |              3.107994 |              3.109806 |
+|    10 |             26 |              3.262686 |              3.264974 |
+|    11 |             26 |              3.107994 |              3.109806 |
+|    12 |             26 |              3.262680 |              3.264968 |
+|    13 |             26 |              3.262685 |              3.264973 |
+|    14 |             26 |              3.262684 |              3.264973 |
+|    15 |             26 |              3.262680 |              3.264969 |
+|    16 |             26 |              3.107996 |              3.109808 |
+|    17 |             26 |              3.262685 |              3.264973 |
+|    18 |             26 |              3.262680 |              3.264968 |
+|    19 |             26 |              3.262680 |              3.264968 |
+|    20 |             26 |              3.107996 |              3.109808 |
+|    21 |             78 |              0.408367 |              0.411275 |
+|    22 |             78 |              0.363982 |              0.371833 |
+|    23 |             78 |              0.238323 |              0.259071 |
+|    24 |             78 |              0.408367 |              0.411275 |
+|    25 |             78 |              0.408363 |              0.411270 |
+|    26 |             78 |              0.363983 |              0.371834 |
+|    27 |             78 |              0.363977 |              0.371828 |
+|    28 |             78 |              0.408363 |              0.411270 |
+|    29 |             78 |              0.363982 |              0.371833 |
+------------------------------------------------------------------------
+
+Saving Quad data in progress...
+Saving Quad data completed...
+Saving Quad data in progress...
+Saving Quad data completed...
+Saving Quad data in progress...
+Saving Quad data completed...
+Saving Quad data in progress...
+Saving Quad data completed...
+SCF iterations converged to the specified tolerance after: 53 iterations.
+GS Fermi energy spin up: -1.667466726590766113e-01
+ Printing KS eigen values (spin split if this is a spin polarized calculation ) and fractional occupancies for kPoint 0
+  
+0 : -3.772797043265411876e+00       -3.764640112100495095e+00       1.000000000000000000e+00       1.000000000000000000e+00
+1 : -3.772791696514361526e+00       -3.764635024690830889e+00       1.000000000000000000e+00       1.000000000000000000e+00
+2 : -3.772787074000682139e+00       -3.764629639287878415e+00       1.000000000000000000e+00       1.000000000000000000e+00
+3 : -3.772786710263126952e+00       -3.764629331623694064e+00       1.000000000000000000e+00       1.000000000000000000e+00
+4 : -3.772781871834031353e+00       -3.764624645078994636e+00       1.000000000000000000e+00       1.000000000000000000e+00
+5 : -3.772781508289689612e+00       -3.764624337586986336e+00       1.000000000000000000e+00       1.000000000000000000e+00
+6 : -3.772779083027041569e+00       -3.764622232725047812e+00       1.000000000000000000e+00       1.000000000000000000e+00
+7 : -3.772774016979263845e+00       -3.764617323925763870e+00       1.000000000000000000e+00       1.000000000000000000e+00
+8 : -3.763907224731970036e+00       -3.758333810848440759e+00       1.000000000000000000e+00       1.000000000000000000e+00
+9 : -3.763905182259411841e+00       -3.758331846504448404e+00       1.000000000000000000e+00       1.000000000000000000e+00
+10 : -3.762642233156024307e+00       -3.753689502951066626e+00       1.000000000000000000e+00       1.000000000000000000e+00
+11 : -3.762639965628327587e+00       -3.753687581126042172e+00       1.000000000000000000e+00       1.000000000000000000e+00
+12 : -3.762634657303968844e+00       -3.753682444274738739e+00       1.000000000000000000e+00       1.000000000000000000e+00
+13 : -3.762634628163946005e+00       -3.753682420676868414e+00       1.000000000000000000e+00       1.000000000000000000e+00
+14 : -3.762632423562174200e+00       -3.753680542837393386e+00       1.000000000000000000e+00       1.000000000000000000e+00
+15 : -3.762632394288806026e+00       -3.753680519165137675e+00       1.000000000000000000e+00       1.000000000000000000e+00
+16 : -3.762627050678986063e+00       -3.753675368236097487e+00       1.000000000000000000e+00       1.000000000000000000e+00
+17 : -3.762624849565715301e+00       -3.753673486851004437e+00       1.000000000000000000e+00       1.000000000000000000e+00
+18 : -3.451569847589965878e+00       -3.322178731062225943e+00       1.000000000000000000e+00       1.000000000000000000e+00
+19 : -3.451561206856005093e+00       -3.322165966887276944e+00       1.000000000000000000e+00       1.000000000000000000e+00
+20 : -3.451560711376191470e+00       -3.322165596855575664e+00       1.000000000000000000e+00       1.000000000000000000e+00
+21 : -3.451541293910382890e+00       -3.322141503892251713e+00       1.000000000000000000e+00       1.000000000000000000e+00
+22 : -3.451538643786507876e+00       -3.322128880183580435e+00       1.000000000000000000e+00       1.000000000000000000e+00
+23 : -3.451519484287568940e+00       -3.322105733982359865e+00       1.000000000000000000e+00       1.000000000000000000e+00
+24 : -3.451518954795328664e+00       -3.322105348160183880e+00       1.000000000000000000e+00       1.000000000000000000e+00
+25 : -3.451510580731395716e+00       -3.322093588243538065e+00       1.000000000000000000e+00       1.000000000000000000e+00
+26 : -3.440464308099075108e+00       -3.315673515996784726e+00       1.000000000000000000e+00       1.000000000000000000e+00
+27 : -3.440282884942198027e+00       -3.315472782379792260e+00       1.000000000000000000e+00       1.000000000000000000e+00
+28 : -3.440282840054758040e+00       -3.315472733799238458e+00       1.000000000000000000e+00       1.000000000000000000e+00
+29 : -3.440102089999664159e+00       -3.315273011554502158e+00       1.000000000000000000e+00       1.000000000000000000e+00
+30 : -2.212422364989986789e+00       -2.087070695507167173e+00       1.000000000000000000e+00       1.000000000000000000e+00
+31 : -2.212349859107358263e+00       -2.086658381250590111e+00       1.000000000000000000e+00       1.000000000000000000e+00
+32 : -2.212349102227098019e+00       -2.086657547724299011e+00       1.000000000000000000e+00       1.000000000000000000e+00
+33 : -2.212246681501932599e+00       -2.086382576888591966e+00       1.000000000000000000e+00       1.000000000000000000e+00
+34 : -2.211905788369917580e+00       -2.086110056069494956e+00       1.000000000000000000e+00       1.000000000000000000e+00
+35 : -2.211798966437982461e+00       -2.086005970113151697e+00       1.000000000000000000e+00       1.000000000000000000e+00
+36 : -2.211798205884018209e+00       -2.086005057643356420e+00       1.000000000000000000e+00       1.000000000000000000e+00
+37 : -2.211721433182145091e+00       -2.085553808337628379e+00       1.000000000000000000e+00       1.000000000000000000e+00
+38 : -2.209301249532026112e+00       -2.081097324286610650e+00       1.000000000000000000e+00       1.000000000000000000e+00
+39 : -2.209290179744145100e+00       -2.081097078006775014e+00       1.000000000000000000e+00       1.000000000000000000e+00
+40 : -2.209289825524365369e+00       -2.080995291093356681e+00       1.000000000000000000e+00       1.000000000000000000e+00
+41 : -2.209272441783154850e+00       -2.080838915324573879e+00       1.000000000000000000e+00       1.000000000000000000e+00
+42 : -2.209251803797778635e+00       -2.080838643564147716e+00       1.000000000000000000e+00       1.000000000000000000e+00
+43 : -2.209237542686232292e+00       -2.080716786387005079e+00       1.000000000000000000e+00       1.000000000000000000e+00
+44 : -2.209237157114932071e+00       -2.080666011312603203e+00       1.000000000000000000e+00       1.000000000000000000e+00
+45 : -2.209229153820171820e+00       -2.080381912457020199e+00       1.000000000000000000e+00       1.000000000000000000e+00
+46 : -2.203454435545637136e+00       -2.078460146126372088e+00       1.000000000000000000e+00       1.000000000000000000e+00
+47 : -2.203408961215358008e+00       -2.078459988234722555e+00       1.000000000000000000e+00       1.000000000000000000e+00
+48 : -2.203362603043503398e+00       -2.078328962680882519e+00       1.000000000000000000e+00       1.000000000000000000e+00
+49 : -2.203361920494047776e+00       -2.078328802256662389e+00       1.000000000000000000e+00       1.000000000000000000e+00
+50 : -2.203214508335403554e+00       -2.078007196692426728e+00       1.000000000000000000e+00       1.000000000000000000e+00
+51 : -2.203196951276280569e+00       -2.077719170162015683e+00       1.000000000000000000e+00       1.000000000000000000e+00
+52 : -2.203196307531651410e+00       -2.077482457705513763e+00       1.000000000000000000e+00       1.000000000000000000e+00
+53 : -2.203065076205024564e+00       -2.077002810243487652e+00       1.000000000000000000e+00       1.000000000000000000e+00
+54 : -2.197819154767104877e+00       -2.077002790757439765e+00       1.000000000000000000e+00       1.000000000000000000e+00
+55 : -2.197608696437412856e+00       -2.076713451707839830e+00       1.000000000000000000e+00       1.000000000000000000e+00
+56 : -2.197608653985362537e+00       -2.076376328275357341e+00       1.000000000000000000e+00       1.000000000000000000e+00
+57 : -2.197371204563303593e+00       -2.076203406367662652e+00       1.000000000000000000e+00       1.000000000000000000e+00
+58 : -2.197117355843274389e+00       -2.074869042378364892e+00       1.000000000000000000e+00       1.000000000000000000e+00
+59 : -2.196437103406317259e+00       -2.074514052989984592e+00       1.000000000000000000e+00       1.000000000000000000e+00
+60 : -2.196437011874021739e+00       -2.074513855048428557e+00       1.000000000000000000e+00       1.000000000000000000e+00
+61 : -2.195263662171161201e+00       -2.074449791565897705e+00       1.000000000000000000e+00       1.000000000000000000e+00
+62 : -2.194866361784233888e+00       -2.074318013943190042e+00       1.000000000000000000e+00       1.000000000000000000e+00
+63 : -2.193620661173597775e+00       -2.074142928783398787e+00       1.000000000000000000e+00       1.000000000000000000e+00
+64 : -2.193620373492445541e+00       -2.074091409921752227e+00       1.000000000000000000e+00       1.000000000000000000e+00
+65 : -2.192900123737051121e+00       -2.074091256954195828e+00       1.000000000000000000e+00       1.000000000000000000e+00
+66 : -2.095228979125675295e+00       -2.073665062443908358e+00       1.000000000000000000e+00       1.000000000000000000e+00
+67 : -2.095134313841197304e+00       -2.073664936424127525e+00       1.000000000000000000e+00       1.000000000000000000e+00
+68 : -2.094820603833971173e+00       -2.073428878937773945e+00       1.000000000000000000e+00       1.000000000000000000e+00
+69 : -2.094819351939685159e+00       -2.073033720857148321e+00       1.000000000000000000e+00       1.000000000000000000e+00
+70 : -2.094719049890495732e+00       -2.073033694303465069e+00       1.000000000000000000e+00       1.000000000000000000e+00
+71 : -2.094717793832503450e+00       -2.072992070963008526e+00       1.000000000000000000e+00       1.000000000000000000e+00
+72 : -2.094357262512021034e+00       -2.072732377829195283e+00       1.000000000000000000e+00       1.000000000000000000e+00
+73 : -2.094260600940781369e+00       -2.072732370114195977e+00       1.000000000000000000e+00       1.000000000000000000e+00
+74 : -2.089211367809283626e+00       -2.072648083694848431e+00       1.000000000000000000e+00       1.000000000000000000e+00
+75 : -2.089211276230118486e+00       -2.071939139750613279e+00       1.000000000000000000e+00       1.000000000000000000e+00
+76 : -2.089180898223309324e+00       -2.071832655635891030e+00       1.000000000000000000e+00       1.000000000000000000e+00
+77 : -2.089044958578029298e+00       -2.071832051098220884e+00       1.000000000000000000e+00       1.000000000000000000e+00
+78 : -2.089042497098612117e+00       -2.071797936763895898e+00       1.000000000000000000e+00       1.000000000000000000e+00
+79 : -2.089042415080330173e+00       -2.071480409353302576e+00       1.000000000000000000e+00       1.000000000000000000e+00
+80 : -2.088947093919820919e+00       -2.070430907639143836e+00       1.000000000000000000e+00       1.000000000000000000e+00
+81 : -2.088911031214117031e+00       -2.070430550707959227e+00       1.000000000000000000e+00       1.000000000000000000e+00
+82 : -2.085862059364837151e+00       -2.070342368940041311e+00       1.000000000000000000e+00       1.000000000000000000e+00
+83 : -2.085861884280859169e+00       -2.070109630611435936e+00       1.000000000000000000e+00       1.000000000000000000e+00
+84 : -2.085783450541740525e+00       -2.068143361020085003e+00       1.000000000000000000e+00       1.000000000000000000e+00
+85 : -2.085783282517819526e+00       -2.067958041011802361e+00       1.000000000000000000e+00       1.000000000000000000e+00
+86 : -2.085184818815630337e+00       -2.067711105593923460e+00       1.000000000000000000e+00       1.000000000000000000e+00
+87 : -2.085043304612146375e+00       -2.067710959827389505e+00       1.000000000000000000e+00       1.000000000000000000e+00
+88 : -2.084977740848303895e+00       -2.067661679505474304e+00       1.000000000000000000e+00       1.000000000000000000e+00
+89 : -2.084940015369659339e+00       -2.067661624804743692e+00       1.000000000000000000e+00       1.000000000000000000e+00
+90 : -2.083007964214337981e+00       -2.067366919993959495e+00       1.000000000000000000e+00       1.000000000000000000e+00
+91 : -2.083007951319237883e+00       -2.066930564363326894e+00       1.000000000000000000e+00       1.000000000000000000e+00
+92 : -2.082989468873138073e+00       -2.066872534813984252e+00       1.000000000000000000e+00       1.000000000000000000e+00
+93 : -2.082976313197116180e+00       -2.066636316030024734e+00       1.000000000000000000e+00       1.000000000000000000e+00
+94 : -2.082962227725230875e+00       -2.066636305958563735e+00       1.000000000000000000e+00       1.000000000000000000e+00
+95 : -2.082962216460399141e+00       -2.066611572770647332e+00       1.000000000000000000e+00       1.000000000000000000e+00
+96 : -2.082941569193917264e+00       -2.066263241381760540e+00       1.000000000000000000e+00       1.000000000000000000e+00
+97 : -2.082928884605611763e+00       -2.066263055602464149e+00       1.000000000000000000e+00       1.000000000000000000e+00
+98 : -2.080905098502364492e+00       -2.066206885818014705e+00       1.000000000000000000e+00       1.000000000000000000e+00
+99 : -2.080811400750519180e+00       -2.065989929091297306e+00       1.000000000000000000e+00       1.000000000000000000e+00
+100 : -2.080610560983057411e+00       -2.065519678815617155e+00       1.000000000000000000e+00       1.000000000000000000e+00
+101 : -2.080519430961489835e+00       -2.065439334054477882e+00       1.000000000000000000e+00       1.000000000000000000e+00
+102 : -2.079875790336176866e+00       -2.065439325343795485e+00       1.000000000000000000e+00       1.000000000000000000e+00
+103 : -2.079875526672868791e+00       -2.065415524975259487e+00       1.000000000000000000e+00       1.000000000000000000e+00
+104 : -2.079827247496291331e+00       -2.065300528304220951e+00       1.000000000000000000e+00       1.000000000000000000e+00
+105 : -2.079826982134555191e+00       -2.065188883974404366e+00       1.000000000000000000e+00       1.000000000000000000e+00
+106 : -2.078720744816672461e+00       -2.064918647244155636e+00       1.000000000000000000e+00       1.000000000000000000e+00
+107 : -2.078719575451478452e+00       -2.064918512152149610e+00       1.000000000000000000e+00       1.000000000000000000e+00
+108 : -2.078686179089868080e+00       -2.064744401971388310e+00       1.000000000000000000e+00       1.000000000000000000e+00
+109 : -2.078686070034307054e+00       -2.064744264568616039e+00       1.000000000000000000e+00       1.000000000000000000e+00
+110 : -2.078683328421445431e+00       -2.064498730040498664e+00       1.000000000000000000e+00       1.000000000000000000e+00
+111 : -2.078683220573784407e+00       -2.063963005074251900e+00       1.000000000000000000e+00       1.000000000000000000e+00
+112 : -2.074695315934366402e+00       -2.063817692243473889e+00       1.000000000000000000e+00       1.000000000000000000e+00
+113 : -2.074693647788874884e+00       -2.063637956642890181e+00       1.000000000000000000e+00       1.000000000000000000e+00
+114 : -2.074076408572267827e+00       -2.063363349478033015e+00       1.000000000000000000e+00       1.000000000000000000e+00
+115 : -2.074076312833620150e+00       -2.063363344777832786e+00       1.000000000000000000e+00       1.000000000000000000e+00
+116 : -2.074067344127970447e+00       -2.063209306320845204e+00       1.000000000000000000e+00       1.000000000000000000e+00
+117 : -2.074067250777212212e+00       -2.063209227390406131e+00       1.000000000000000000e+00       1.000000000000000000e+00
+118 : -2.073640821277807245e+00       -2.062984924189923408e+00       1.000000000000000000e+00       1.000000000000000000e+00
+119 : -2.073622288592110063e+00       -2.062940467893008556e+00       1.000000000000000000e+00       1.000000000000000000e+00
+120 : -4.507951474339130238e-01       -4.437524402884636676e-01       1.000000000000000000e+00       1.000000000000000000e+00
+121 : -4.166481111874470455e-01       -4.085139663564989476e-01       1.000000000000000000e+00       1.000000000000000000e+00
+122 : -4.166470969268560864e-01       -4.085129392795686654e-01       1.000000000000000000e+00       1.000000000000000000e+00
+123 : -3.882143344331870360e-01       -3.798901390313455528e-01       1.000000000000000000e+00       1.000000000000000000e+00
+124 : -3.851289796847813807e-01       -3.730774728943729301e-01       1.000000000000000000e+00       1.000000000000000000e+00
+125 : -3.774922541563327516e-01       -3.658358997258039369e-01       1.000000000000000000e+00       1.000000000000000000e+00
+126 : -3.764628688470469942e-01       -3.576460625519588543e-01       1.000000000000000000e+00       1.000000000000000000e+00
+127 : -3.764616384397901916e-01       -3.576443308887208850e-01       1.000000000000000000e+00       1.000000000000000000e+00
+128 : -3.726177316811506435e-01       -3.563448386379196586e-01       1.000000000000000000e+00       1.000000000000000000e+00
+129 : -3.713757647277156071e-01       -3.463280649881725903e-01       1.000000000000000000e+00       1.000000000000000000e+00
+130 : -3.687203378055048386e-01       -3.463277528519269621e-01       1.000000000000000000e+00       1.000000000000000000e+00
+131 : -3.672858481730844060e-01       -3.450147744409786665e-01       1.000000000000000000e+00       1.000000000000000000e+00
+132 : -3.672853155402362457e-01       -3.371990561170174483e-01       1.000000000000000000e+00       1.000000000000000000e+00
+133 : -3.638332004665254527e-01       -3.368768494842203087e-01       1.000000000000000000e+00       1.000000000000000000e+00
+134 : -3.609944118690472381e-01       -3.362260121624656706e-01       1.000000000000000000e+00       1.000000000000000000e+00
+135 : -3.609943147431888821e-01       -3.307178563117902370e-01       1.000000000000000000e+00       1.000000000000000000e+00
+136 : -3.589084599374682272e-01       -3.299895553171083851e-01       1.000000000000000000e+00       1.000000000000000000e+00
+137 : -3.582854790380185506e-01       -3.299894639309935984e-01       1.000000000000000000e+00       1.000000000000000000e+00
+138 : -3.582850582825675700e-01       -3.282151053128729568e-01       1.000000000000000000e+00       1.000000000000000000e+00
+139 : -3.558260248540154880e-01       -3.269047077627093567e-01       1.000000000000000000e+00       1.000000000000000000e+00
+140 : -3.540944581326872509e-01       -3.199132871670976042e-01       1.000000000000000000e+00       1.000000000000000000e+00
+141 : -3.526729202095143512e-01       -3.199128665019813078e-01       1.000000000000000000e+00       1.000000000000000000e+00
+142 : -3.521291580126601484e-01       -3.163437921562430311e-01       1.000000000000000000e+00       1.000000000000000000e+00
+143 : -3.516409069991762726e-01       -3.149673106818134394e-01       1.000000000000000000e+00       1.000000000000000000e+00
+144 : -3.489943275291615965e-01       -3.135637256100711756e-01       1.000000000000000000e+00       1.000000000000000000e+00
+145 : -3.489941385271337904e-01       -3.135629096967390006e-01       1.000000000000000000e+00       1.000000000000000000e+00
+146 : -3.429747257979836039e-01       -3.119169325590749886e-01       1.000000000000000000e+00       1.000000000000000000e+00
+147 : -3.429745458297547844e-01       -3.107595176556490757e-01       1.000000000000000000e+00       1.000000000000000000e+00
+148 : -3.404450445645550438e-01       -3.064860591183604654e-01       1.000000000000000000e+00       1.000000000000000000e+00
+149 : -3.381927458223189520e-01       -3.051598893353387743e-01       1.000000000000000000e+00       1.000000000000000000e+00
+150 : -3.334155976212012651e-01       -3.051592651622503372e-01       1.000000000000000000e+00       1.000000000000000000e+00
+151 : -3.333986845533465360e-01       -3.049810674411262967e-01       1.000000000000000000e+00       1.000000000000000000e+00
+152 : -3.325812721474247780e-01       -3.009301658887931774e-01       1.000000000000000000e+00       1.000000000000000000e+00
+153 : -3.265537704722461521e-01       -3.009299601071244723e-01       1.000000000000000000e+00       1.000000000000000000e+00
+154 : -3.258277528022306968e-01       -2.952820156687494535e-01       1.000000000000000000e+00       1.000000000000000000e+00
+155 : -3.258269604457703639e-01       -2.931065782509222895e-01       1.000000000000000000e+00       1.000000000000000000e+00
+156 : -3.225088926540866097e-01       -2.931062001674746842e-01       1.000000000000000000e+00       1.000000000000000000e+00
+157 : -3.224808086049430478e-01       -2.916477717290483773e-01       1.000000000000000000e+00       1.000000000000000000e+00
+158 : -3.224805588535030743e-01       -2.916469069977077333e-01       1.000000000000000000e+00       1.000000000000000000e+00
+159 : -3.212349348142309879e-01       -2.911465930473460251e-01       1.000000000000000000e+00       1.000000000000000000e+00
+160 : -3.212349041318757759e-01       -2.863055832291953595e-01       1.000000000000000000e+00       1.000000000000000000e+00
+161 : -3.202500278732025585e-01       -2.847233315855298152e-01       1.000000000000000000e+00       1.000000000000000000e+00
+162 : -3.160180314165784154e-01       -2.846402242655926007e-01       1.000000000000000000e+00       1.000000000000000000e+00
+163 : -3.157489450109416951e-01       -2.846401785924104755e-01       1.000000000000000000e+00       1.000000000000000000e+00
+164 : -3.157482982676019789e-01       -2.777023844608095260e-01       1.000000000000000000e+00       1.000000000000000000e+00
+165 : -3.145100806525952808e-01       -2.762803039339792877e-01       1.000000000000000000e+00       1.000000000000000000e+00
+166 : -3.141903997359080103e-01       -2.753344260419882117e-01       1.000000000000000000e+00       1.000000000000000000e+00
+167 : -3.113605519022076273e-01       -2.748531644457608003e-01       1.000000000000000000e+00       1.000000000000000000e+00
+168 : -3.095822776417443967e-01       -2.748527333087421032e-01       1.000000000000000000e+00       1.000000000000000000e+00
+169 : -3.095818358973592699e-01       -2.709207005990277861e-01       1.000000000000000000e+00       1.000000000000000000e+00
+170 : -3.093900041332306450e-01       -2.699862221025483011e-01       1.000000000000000000e+00       1.000000000000000000e+00
+171 : -3.046765931482577905e-01       -2.669885062825696487e-01       1.000000000000000000e+00       1.000000000000000000e+00
+172 : -3.046759331339238264e-01       -2.660691691936754033e-01       1.000000000000000000e+00       1.000000000000000000e+00
+173 : -3.043335232909707977e-01       -2.660688582187839546e-01       1.000000000000000000e+00       1.000000000000000000e+00
+174 : -3.043328857565832934e-01       -2.646824521222445048e-01       1.000000000000000000e+00       1.000000000000000000e+00
+175 : -3.037069905159582306e-01       -2.646822228479323580e-01       1.000000000000000000e+00       1.000000000000000000e+00
+176 : -2.997388392615705222e-01       -2.642303705984386797e-01       1.000000000000000000e+00       1.000000000000000000e+00
+177 : -2.997379724245014532e-01       -2.599735538062120099e-01       1.000000000000000000e+00       1.000000000000000000e+00
+178 : -2.956755876916580816e-01       -2.586469280869364007e-01       1.000000000000000000e+00       1.000000000000000000e+00
+179 : -2.956163652760982474e-01       -2.586464381559746006e-01       1.000000000000000000e+00       1.000000000000000000e+00
+180 : -2.956152644417321951e-01       -2.560365696191161389e-01       1.000000000000000000e+00       1.000000000000000000e+00
+181 : -2.945199951988162201e-01       -2.528231243417977669e-01       1.000000000000000000e+00       1.000000000000000000e+00
+182 : -2.930279526717557981e-01       -2.528226121062341902e-01       1.000000000000000000e+00       1.000000000000000000e+00
+183 : -2.928215980092416793e-01       -2.521552514917219101e-01       1.000000000000000000e+00       1.000000000000000000e+00
+184 : -2.925227283685443713e-01       -2.514666999093561617e-01       1.000000000000000000e+00       1.000000000000000000e+00
+185 : -2.919393637420190646e-01       -2.514659851899138654e-01       1.000000000000000000e+00       1.000000000000000000e+00
+186 : -2.908788694798467023e-01       -2.511791049623880445e-01       1.000000000000000000e+00       1.000000000000000000e+00
+187 : -2.894383371939726057e-01       -2.506581399764090667e-01       1.000000000000000000e+00       1.000000000000000000e+00
+188 : -2.872947386896579358e-01       -2.476665259640193906e-01       1.000000000000000000e+00       1.000000000000000000e+00
+189 : -2.872942495603495461e-01       -2.433172822333515284e-01       1.000000000000000000e+00       1.000000000000000000e+00
+190 : -2.850263203627501629e-01       -2.400295295065118795e-01       1.000000000000000000e+00       1.000000000000000000e+00
+191 : -2.841256022223623834e-01       -2.392019086111454584e-01       1.000000000000000000e+00       1.000000000000000000e+00
+192 : -2.841235499467091863e-01       -2.388029278707398395e-01       1.000000000000000000e+00       1.000000000000000000e+00
+193 : -2.824979809096282435e-01       -2.369630106965162075e-01       1.000000000000000000e+00       1.000000000000000000e+00
+194 : -2.824962316433382581e-01       -2.354178694360954116e-01       1.000000000000000000e+00       1.000000000000000000e+00
+195 : -2.818589279116796575e-01       -2.354174440370718213e-01       1.000000000000000000e+00       1.000000000000000000e+00
+196 : -2.762854129545712079e-01       -2.337035088110193115e-01       1.000000000000000000e+00       1.000000000000000000e+00
+197 : -2.762851259790337077e-01       -2.328537446612068962e-01       1.000000000000000000e+00       1.000000000000000000e+00
+198 : -2.759492076111738634e-01       -2.328526473994467216e-01       1.000000000000000000e+00       1.000000000000000000e+00
+199 : -2.746714552959018119e-01       -2.322238363490763957e-01       1.000000000000000000e+00       1.000000000000000000e+00
+200 : -2.733486780183409515e-01       -2.309034201098725814e-01       1.000000000000000000e+00       1.000000000000000000e+00
+201 : -2.717831796763227059e-01       -2.309017389264612086e-01       1.000000000000000000e+00       1.000000000000000000e+00
+202 : -2.717815304742057791e-01       -2.295914481403565077e-01       1.000000000000000000e+00       1.000000000000000000e+00
+203 : -2.717567462890982388e-01       -2.295892258320381407e-01       1.000000000000000000e+00       1.000000000000000000e+00
+204 : -2.707151352575699055e-01       -2.265984628339212381e-01       1.000000000000000000e+00       1.000000000000000000e+00
+205 : -2.678816602081708353e-01       -2.230041756666516495e-01       1.000000000000000000e+00       1.000000000000000000e+00
+206 : -2.663117365150187155e-01       -2.200200724710195122e-01       1.000000000000000000e+00       1.000000000000000000e+00
+207 : -2.634219402937415522e-01       -2.200187887742621473e-01       1.000000000000000000e+00       1.000000000000000000e+00
+208 : -2.632613301463488931e-01       -2.168433835406878285e-01       1.000000000000000000e+00       1.000000000000000000e+00
+209 : -2.632605655335361061e-01       -2.168424823359563491e-01       1.000000000000000000e+00       1.000000000000000000e+00
+210 : -2.561227842672971766e-01       -2.162666850373333727e-01       1.000000000000000000e+00       1.000000000000000000e+00
+211 : -2.553358896832422231e-01       -2.129023240913671955e-01       1.000000000000000000e+00       1.000000000000000000e+00
+212 : -2.547793242037608707e-01       -2.096800942996564221e-01       1.000000000000000000e+00       1.000000000000000000e+00
+213 : -2.547785187217717628e-01       -2.065436226315566781e-01       1.000000000000000000e+00       1.000000000000000000e+00
+214 : -2.515994142016419466e-01       -2.065426411809050400e-01       1.000000000000000000e+00       1.000000000000000000e+00
+215 : -2.515991364757089177e-01       -1.997415624910788834e-01       1.000000000000000000e+00       1.000000000000000000e+00
+216 : -2.511472530177660256e-01       -1.987378648801618741e-01       1.000000000000000000e+00       1.000000000000000000e+00
+217 : -2.486666935989245153e-01       -1.987350908219442380e-01       1.000000000000000000e+00       1.000000000000000000e+00
+218 : -2.476100183883247208e-01       -1.941461913954214968e-01       1.000000000000000000e+00       1.000000000000000000e+00
+219 : -2.476090789663758229e-01       -1.928171699378838644e-01       1.000000000000000000e+00       1.000000000000000000e+00
+220 : -2.429501174543451381e-01       -1.917631101327250120e-01       1.000000000000000000e+00       1.000000000000000000e+00
+221 : -2.421874450234839382e-01       -1.906334565218417709e-01       1.000000000000000000e+00       1.000000000000000000e+00
+222 : -2.411351756650120248e-01       -1.824008916293863025e-01       1.000000000000000000e+00       1.000000000000000000e+00
+223 : -2.411341547787794470e-01       -1.808048736040608062e-01       1.000000000000000000e+00       1.000000000000000000e+00
+224 : -2.404736206925622288e-01       -1.796394640254039554e-01       1.000000000000000000e+00       1.000000000000000000e+00
+225 : -2.400879658086704227e-01       -1.778266646002829576e-01       1.000000000000000000e+00       1.000000000000000000e+00
+226 : -2.400876899878264525e-01       -1.778254554956563982e-01       1.000000000000000000e+00       1.000000000000000000e+00
+227 : -2.385790946102954724e-01       -1.777038499773148650e-01       1.000000000000000000e+00       1.000000000000000000e+00
+228 : -2.382606770624899339e-01       -1.771100064831141740e-01       1.000000000000000000e+00       1.000000000000000000e+00
+229 : -2.380555259373056953e-01       -1.706796700540197942e-01       1.000000000000000000e+00       1.000000000000000000e+00
+230 : -2.372291664798840405e-01       -1.706790354033914658e-01       1.000000000000000000e+00       1.000000000000000000e+00
+231 : -2.372285255017363981e-01       -1.688341909846329814e-01       1.000000000000000000e+00       1.000000000000000000e+00
+232 : -2.341298773925832022e-01       -1.675454246991567031e-01       1.000000000000000000e+00       9.999999999888835589e-01
+233 : -2.318851288859980486e-01       -1.675442352010890756e-01       1.000000000000000000e+00       9.999999999884581214e-01
+234 : -2.306790370726535255e-01       -1.630362755903849992e-01       1.000000000000000000e+00       1.305729813126048538e-51
+235 : -2.300255559452855647e-01       -1.609185796672425173e-01       1.000000000000000000e+00       1.185516708012094329e-80
+236 : -2.298439598222585811e-01       -1.609183991667402502e-01       1.000000000000000000e+00       1.178778773402944715e-80
+237 : -2.298436155985821849e-01       -1.578617757499911900e-01       1.000000000000000000e+00       1.422641348602714949e-122
+238 : -2.294250737782171368e-01       -1.493693230056480636e-01       1.000000000000000000e+00       4.876911565416798096e-239
+239 : -2.294242732683739738e-01       -1.488174068152470220e-01       1.000000000000000000e+00       1.315835971226079442e-246
+240 : -2.285941639060218022e-01       -1.456761064667939365e-01       1.000000000000000000e+00       1.095496215438336456e-289
+241 : -2.265571130684495837e-01       -1.456608437986382787e-01       1.000000000000000000e+00       6.765495857289115313e-290
+242 : -2.254237477346054119e-01       -1.456605559904143588e-01       1.000000000000000000e+00       6.704287794967643611e-290
+243 : -2.248236345640567679e-01       -1.455189008944796081e-01       1.000000000000000000e+00       7.650745881460039731e-292
+244 : -2.248234769165394498e-01       -1.449974517576262389e-01       1.000000000000000000e+00       5.402364258407745475e-299
+245 : -2.234037708237274211e-01       -1.449970314876014577e-01       1.000000000000000000e+00       5.331142698010572532e-299
+246 : -2.223218138115589104e-01       -1.430553121360789437e-01       1.000000000000000000e+00       0.000000000000000000e+00
+247 : -2.197755567966575563e-01       -1.430552182178030374e-01       1.000000000000000000e+00       0.000000000000000000e+00
+248 : -2.197746120830941785e-01       -1.429833843016082850e-01       1.000000000000000000e+00       0.000000000000000000e+00
+249 : -2.177861833146279846e-01       -1.420327936852945061e-01       1.000000000000000000e+00       0.000000000000000000e+00
+250 : -2.173540096554547607e-01       -1.420190623805411556e-01       1.000000000000000000e+00       0.000000000000000000e+00
+251 : -2.161762904768946281e-01       -1.420189479421658796e-01       1.000000000000000000e+00       0.000000000000000000e+00
+252 : -2.155386824279574010e-01       -1.414666328761529923e-01       1.000000000000000000e+00       0.000000000000000000e+00
+253 : -2.155379459382583129e-01       -1.407631762526449504e-01       1.000000000000000000e+00       0.000000000000000000e+00
+254 : -2.128917432005978938e-01       -1.390551329684929782e-01       1.000000000000000000e+00       0.000000000000000000e+00
+255 : -2.126336836333280744e-01       -1.388474143132758243e-01       1.000000000000000000e+00       0.000000000000000000e+00
+256 : -2.126333516752584585e-01       -1.388468609359474193e-01       1.000000000000000000e+00       0.000000000000000000e+00
+257 : -2.117580528892611391e-01       -1.373155915458496024e-01       1.000000000000000000e+00       0.000000000000000000e+00
+258 : -2.117569659853081321e-01       -1.366074461602560797e-01       1.000000000000000000e+00       0.000000000000000000e+00
+259 : -2.112661192104802743e-01       -1.350341447022460062e-01       1.000000000000000000e+00       0.000000000000000000e+00
+260 : -2.082303368337261595e-01       -1.347312060175210324e-01       1.000000000000000000e+00       0.000000000000000000e+00
+261 : -2.073559473018923016e-01       -1.340015206535334902e-01       1.000000000000000000e+00       0.000000000000000000e+00
+262 : -2.049374596800165871e-01       -1.340011095807055463e-01       1.000000000000000000e+00       0.000000000000000000e+00
+263 : -2.031341665098510274e-01       -1.325672673247201283e-01       1.000000000000000000e+00       0.000000000000000000e+00
+264 : -2.031340942544887229e-01       -1.325669399342855881e-01       1.000000000000000000e+00       0.000000000000000000e+00
+265 : -2.017487381475405184e-01       -1.311103061643814904e-01       1.000000000000000000e+00       0.000000000000000000e+00
+266 : -2.017483444075487409e-01       -1.286042139530511053e-01       1.000000000000000000e+00       0.000000000000000000e+00
+267 : -2.013888984189380615e-01       -1.286038996244889543e-01       1.000000000000000000e+00       0.000000000000000000e+00
+268 : -2.008093542575812573e-01       -1.265166793620039476e-01       1.000000000000000000e+00       0.000000000000000000e+00
+269 : -2.008088468724119613e-01       -1.263378484642171395e-01       1.000000000000000000e+00       0.000000000000000000e+00
+270 : -1.968992436542782720e-01       -1.260664424831990371e-01       1.000000000000000000e+00       0.000000000000000000e+00
+271 : -1.953920424355690133e-01       -1.260663675453231880e-01       1.000000000000000000e+00       0.000000000000000000e+00
+272 : -1.951875100501593019e-01       -1.225527193826764227e-01       1.000000000000000000e+00       0.000000000000000000e+00
+273 : -1.916720139031281023e-01       -1.213208585154843672e-01       1.000000000000000000e+00       0.000000000000000000e+00
+274 : -1.831540817757111306e-01       -1.204695951750721777e-01       1.000000000000000000e+00       0.000000000000000000e+00
+275 : -1.831538598711897892e-01       -1.178243223895621000e-01       1.000000000000000000e+00       0.000000000000000000e+00
+276 : -1.807989912195703264e-01       -1.173798382768603404e-01       1.000000000000000000e+00       0.000000000000000000e+00
+277 : -1.786170457908414222e-01       -1.172216850541792782e-01       1.000000000000000000e+00       0.000000000000000000e+00
+278 : -1.768832274964527440e-01       -1.172208805296493100e-01       1.000000000000000000e+00       0.000000000000000000e+00
+279 : -1.739822042435729132e-01       -1.159302960104939967e-01       1.000000000000000000e+00       0.000000000000000000e+00
+280 : -1.714483287594676109e-01       -1.159300286330744306e-01       1.000000000000000000e+00       0.000000000000000000e+00
+281 : -1.714479561013224906e-01       -1.143329273533822826e-01       1.000000000000000000e+00       0.000000000000000000e+00
+282 : -1.644933717244449201e-01       -1.137368929271817125e-01       1.254226451649276782e-31       0.000000000000000000e+00
+283 : -1.537699992416184380e-01       -1.125914885983574920e-01       1.093290687668114095e-178       0.000000000000000000e+00
+284 : -1.514535777641925207e-01       -1.110367617952453673e-01       1.868445961744560009e-210       0.000000000000000000e+00
+285 : -1.514531722829240146e-01       -1.069028985722646069e-01       1.844674727622512513e-210       0.000000000000000000e+00
+286 : -1.498669147117491496e-01       -1.069019807564619701e-01       3.251513217545071856e-232       0.000000000000000000e+00
+287 : -1.250731291374580778e-01       -9.548456980491597246e-02       0.000000000000000000e+00       0.000000000000000000e+00
+288 : -1.241164841787626288e-01       -9.331272618950392506e-02       0.000000000000000000e+00       0.000000000000000000e+00
+289 : -1.241163444423881435e-01       -9.331177787117696243e-02       0.000000000000000000e+00       0.000000000000000000e+00
+290 : -1.167441799470761710e-01       -8.515208122386577760e-02       0.000000000000000000e+00       0.000000000000000000e+00
+291 : -1.117098232935101465e-01       -8.515148455925054816e-02       0.000000000000000000e+00       0.000000000000000000e+00
+292 : -1.117091408165394595e-01       -8.418384644825319119e-02       0.000000000000000000e+00       0.000000000000000000e+00
+293 : -9.153653965346569832e-02       -6.958103436184616408e-02       0.000000000000000000e+00       0.000000000000000000e+00
+294 : -8.565929835912071411e-02       -6.496190969301077200e-02       0.000000000000000000e+00       0.000000000000000000e+00
+295 : -8.565844708095576854e-02       -6.496146341844864780e-02       0.000000000000000000e+00       0.000000000000000000e+00
+296 : -7.957224281082429795e-02       -6.205556628647532214e-02       0.000000000000000000e+00       0.000000000000000000e+00
+297 : -7.672989907782805374e-02       -5.561213866653650501e-02       0.000000000000000000e+00       0.000000000000000000e+00
+298 : -6.516862762430258860e-02       -4.965963486354257883e-02       0.000000000000000000e+00       0.000000000000000000e+00
+299 : -6.420024145221733813e-02       -4.160970372819822183e-02       0.000000000000000000e+00       0.000000000000000000e+00
+300 : -5.658665622951234569e-02       -3.826336992582188984e-02       0.000000000000000000e+00       0.000000000000000000e+00
+301 : -5.551629957434919826e-02       -3.348920782835754228e-02       0.000000000000000000e+00       0.000000000000000000e+00
+302 : -5.251635225098260501e-02       -3.264490594947930258e-02       0.000000000000000000e+00       0.000000000000000000e+00
+303 : -5.027094236443836045e-02       -2.938971026261854094e-02       0.000000000000000000e+00       0.000000000000000000e+00
+304 : -5.027092543883253384e-02       -2.938943570791901008e-02       0.000000000000000000e+00       0.000000000000000000e+00
+305 : -3.922474523498380855e-02       -1.718171261946940809e-02       0.000000000000000000e+00       0.000000000000000000e+00
+306 : -3.481629553571729402e-02       -1.446904536042723302e-02       0.000000000000000000e+00       0.000000000000000000e+00
+307 : -3.481495557338436242e-02       -1.446750362793020571e-02       0.000000000000000000e+00       0.000000000000000000e+00
+308 : -1.878590961153601621e-02       -5.131053265092016917e-03       0.000000000000000000e+00       0.000000000000000000e+00
+309 : -1.878572793754801351e-02       -5.105125867575793612e-03       0.000000000000000000e+00       0.000000000000000000e+00
+310 : -1.647535462211766055e-02       -2.169519344118846227e-03       0.000000000000000000e+00       0.000000000000000000e+00
+311 : -1.647268857566508427e-02       -2.104446478905891774e-03       0.000000000000000000e+00       0.000000000000000000e+00
+312 : -1.459297120240041212e-02       -1.910167531141011323e-03       0.000000000000000000e+00       0.000000000000000000e+00
+313 : -9.977580493216342550e-03       -1.707508504417882839e-03       0.000000000000000000e+00       0.000000000000000000e+00
+314 : -9.947148798752351861e-03       4.179969752133265567e-04       0.000000000000000000e+00       0.000000000000000000e+00
+315 : -2.626144752652081246e-03       1.845971605697701483e-03       0.000000000000000000e+00       0.000000000000000000e+00
+316 : 9.873669005214979122e-05       2.646591429931303020e-03       0.000000000000000000e+00       0.000000000000000000e+00
+317 : 6.131054065602740185e-04       2.868537431635331640e-03       0.000000000000000000e+00       0.000000000000000000e+00
+318 : 6.772890679230378266e-04       3.069974921350339392e-03       0.000000000000000000e+00       0.000000000000000000e+00
+319 : 2.016754012397423742e-03       4.291487243501212329e-03       0.000000000000000000e+00       0.000000000000000000e+00
+320 : 2.820772557093279530e-03       5.035935373170901362e-03       0.000000000000000000e+00       0.000000000000000000e+00
+321 : 3.137282144086598040e-03       5.748637607618342811e-03       0.000000000000000000e+00       0.000000000000000000e+00
+322 : 4.352217862826886566e-03       7.327642298269214545e-03       0.000000000000000000e+00       0.000000000000000000e+00
+323 : 4.985533534790261012e-03       8.073826992513631270e-03       0.000000000000000000e+00       0.000000000000000000e+00
+324 : 6.110059268338861697e-03       8.523477768535332386e-03       0.000000000000000000e+00       0.000000000000000000e+00
+325 : 7.743449539325363354e-03       1.020146659798923904e-02       0.000000000000000000e+00       0.000000000000000000e+00
+326 : 8.381827276196313764e-03       1.071563840929228191e-02       0.000000000000000000e+00       0.000000000000000000e+00
+327 : 8.873506085656438294e-03       1.142726882264856816e-02       0.000000000000000000e+00       0.000000000000000000e+00
+328 : 9.338368633452737849e-03       1.325023606433253960e-02       0.000000000000000000e+00       0.000000000000000000e+00
+329 : 1.082651422288875842e-02       1.380238971172656655e-02       0.000000000000000000e+00       0.000000000000000000e+00
+============================================================================================================
+
+Energy computations (Hartree)
+-------------------------------------------------------------------------------
+Band energy                                         :  -6.7009201586534107e+02
+Exchange energy                                     :  -6.0405291694578716e+02
+Correlation energy                                  :  -3.6636324637336628e+01
+Total internal energy                               :  -3.8537132822247581e+03
+Total internal energy per atom                      :  -1.2845710940749194e+02
+-------------------------------------------------------------------------------
+Total entropic energy: 0.000000000000000000e+00
+Total free energy: -3.853713282224758132e+03
+Absolute magnetization: 4.989696658616453107e+01
+Net magnetization     : 4.799998992921919694e+01
+Total scf solve, wall time: 191.138s.
+
+Ion forces (Hartree/Bohr)
+--------------------------------------------------------------------------------------------
+   0     6.626085700518552064e-06   -6.847592118193079342e-06   -9.750455395096156185e-06
+   1     -1.947252241708564818e-07   2.874838169542881265e-08   -1.161010216879131030e-06
+   2     -4.989521408855077628e-09   4.351539153442774415e-06   -3.647184478667618469e-06
+   3     -8.348709418924887417e-06   -6.698920824278364334e-06   -1.034836421761835353e-05
+   4     -6.529434621309543767e-06   7.161166585944012668e-06   -9.892993666830483278e-06
+   5     -3.243161645117391272e-07   -4.020588636994725801e-06   -3.929487393809259231e-06
+   6     8.555833144081665252e-06   7.179749010681857884e-06   -1.001787281371489898e-05
+   7     -4.803949370073485208e-06   -3.676090797617716052e-07   -4.295743947658512717e-06
+   8     4.978348796820313955e-06   2.446545886650526074e-07   -4.028061979442263706e-06
+   9     -7.362189370391442494e-06   6.461020748019630771e-06   7.178686247115713223e-09
+  10     1.269181328659281834e-05   4.158937349905173251e-05   8.715247519281164107e-10
+  11     7.474075893222425610e-06   6.690808480653121498e-06   2.267976918970865919e-09
+  12     1.249312203472470780e-05   -4.204043306355836586e-05   5.792499577575611995e-09
+  13     -1.230453264707713171e-05   4.185064390099702301e-05   -1.917742883544242324e-09
+  14     -4.141388258747262031e-05   1.444898026600649616e-05   -7.305857921962390130e-09
+  15     4.149977557175978592e-05   -1.397070776021458321e-05   2.079645738310905871e-09
+  16     7.104890086935338862e-06   -6.400911472943415232e-06   -4.237643906783453702e-09
+  17     4.105227432515936236e-05   1.476904011829438674e-05   -6.539696697014334852e-09
+  18     -4.130448132010792540e-05   -1.392626495208648534e-05   2.406942043770553053e-09
+  19     -1.213387645217937586e-05   -4.161934853992676732e-05   -5.909729057582451307e-10
+  20     -7.710180343352617961e-06   -6.571156557736878574e-06   3.452725434283017588e-09
+  21     8.281644220377099429e-06   -6.855859590261136900e-06   9.760217543504880723e-06
+  22     -4.803116903644361495e-06   -3.754108443768423533e-07   4.292315151196115209e-06
+  23     -1.938317237583770122e-07   2.690806733895388893e-08   1.163456050719781475e-06
+  24     -8.357003754310071288e-06   -6.701358117812027954e-06   1.034781529586271868e-05
+  25     -8.192525450583170867e-06   5.491850105287077726e-06   9.898519447232813885e-06
+  26     -3.180800297917070309e-07   -4.025896872817846257e-06   3.933724202872203847e-06
+  27     5.687535318745802104e-10   4.349371686875436731e-06   3.640501392131691271e-06
+  28     8.552658737843793900e-06   5.529373525102854730e-06   1.000225897455543548e-05
+  29     4.988734351500450754e-06   2.488303129064624255e-07   4.028907965244145884e-06
+--------------------------------------------------------------------------------------------
+ Maximum absolute force atom id: 14, Force vec: -4.141388258747262031e-05,1.444898026600649616e-05,-7.305857921962390130e-09
+ Sum of absolute value of all force components over all atoms: 7.636272987161242228e-04
+ Sum of all forces in each component: -2.456395547037470983e-20 -2.122876324056090225e-20 1.524659305057740610e-20
+Force and Stress computation, wall time: 10.6492s.
+
+------------------DFT-FE ground-state solve completed---------------------------
+
+
++---------------------------------------------+------------+------------+
+| Total wallclock time elapsed since start    | 2.612e+02s |            |
+|                                             |            |            |
+| Section                         | no. calls |  wall time | % of total |
++---------------------------------+-----------+------------+------------+
+| Atomic system initialization    |         1 | 4.933e-01s |  1.89e-01% |
+| Force and Stress computation    |         1 | 1.065e+01s |  4.08e+00% |
+| Init local PSP                  |         1 | 8.065e+00s |  3.09e+00% |
+| KSDFT problem initialization    |         1 | 4.390e+01s |  1.68e+01% |
+| Nuclear self-potential solve    |         1 | 3.704e+00s |  1.42e+00% |
+| Total scf solve                 |         1 | 1.911e+02s |  7.32e+01% |
+| initialize density              |         1 | 5.662e-01s |  2.17e-01% |
++---------------------------------+-----------+------------+------------+
+
+=============================================================================================
+DFT-FE Program ends. Elapsed wall time since start of the program: 2.658344478170000116e+02 seconds.
+=============================================================================================

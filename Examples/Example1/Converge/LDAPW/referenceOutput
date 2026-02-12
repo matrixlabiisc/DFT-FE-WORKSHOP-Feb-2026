@@ -1,0 +1,575 @@
+==========================================================================================================
+==========================================================================================================
+			Welcome to the Open Source program DFT-FE version	1.1.0-pre		        
+This is a C++ code for materials modeling from first principles using Kohn-Sham density functional theory.
+This is a real-space code for periodic, semi-periodic and non-periodic pseudopotential
+and all-electron calculations, and is based on adaptive finite-element discretization.
+For further details, and citing, please refer to our website: https://sites.google.com/umich.edu/dftfe
+==========================================================================================================
+ DFT-FE Mentors and Development leads (alphabetically) :									
+														
+ Sambit Das               - University of Michigan, USA
+ Vikram Gavini            - University of Michigan, USA
+ Phani Motamarri          - Indian Institute of Science, India
+ (A complete list of the many authors that have contributed to DFT-FE can be found in the authors file)
+==========================================================================================================
+ 	     Copyright (c) 2017-2025 The Regents of the University of Michigan and DFT-FE authors         
+ 			DFT-FE is published under [LGPL v2.1 or newer] 				
+==========================================================================================================
+==========================================================================================================
+ DFT-FE branch: workshopBranch, commit: 43c0b9fe9c8f4731e3b4c4eb51ae280e887ad9c5
+ compiled with GPU support, using CUDA, with device-aware MPI support, with NCCL support, with OpenMP support, with 64 bit integers, and with HIGHERQUAD_PSP
+==========================================================================================================
+set RESTART        = false
+set RESTART FOLDER = restartFolder
+set SOLVER MODE    = GS
+set USE GPU        = true
+set VERBOSITY      = 1
+subsection NEB
+  set ALLOW IMAGE FREEZING             = false
+  set BFGS STEP METHOD                 = QN
+  set ION RELAX FLAGS FILE             =
+  set LBFGS HISTORY                    = 5
+  set MAXIMUM ION UPDATE STEP          = 0.5
+  set MAXIMUM NUMBER OF NEB ITERATIONS = 100
+  set MAXIMUM SPRING CONSTANT          = 5e-3
+  set MAX LINE SEARCH ITER             = 5
+  set MINIMUM SPRING CONSTANT          = 2e-3
+  set NEB COORDINATES FILE             =
+  set NEB DOMAIN VECTORS FILE          =
+  set NEB OPT SOLVER                   = LBFGS
+  set NUMBER OF IMAGES                 = 7
+  set PATH THRESHOLD                   = 5e-4
+end
+set KEEP SCRATCH FOLDER                             = false
+set MEM OPT MODE                                    = false
+set REPRODUCIBLE OUTPUT                             = false
+set WRITE STRUCTURE ENERGY FORCES DATA POST PROCESS = false
+subsection Boundary conditions
+  set APPLY NEUMANN BOUNDARY CONDITION   = false
+  set CONSTRAINTS FROM SERIAL DOFHANDLER = false
+  set CONSTRAINTS PARALLEL CHECK         = false
+  set FLOATING NUCLEAR CHARGES           = true
+  set MULTIPOLE BOUNDARY CONDITIONS      = false
+  set PERIODIC1                          = false
+  set PERIODIC2                          = false
+  set PERIODIC3                          = false
+  set POINT WISE DIRICHLET CONSTRAINT    = false
+  set SELF POTENTIAL RADIUS              = 0.0
+  set SMEARED NUCLEAR CHARGES            = true
+end
+subsection Brillouin zone k point sampling options
+  set USE GROUP SYMMETRY         = false
+  set USE TIME REVERSAL SYMMETRY = false
+  set kPOINT RULE FILE           =
+  subsection Monkhorst-Pack (MP) grid generation
+    set SAMPLING POINTS 1 = 1
+    set SAMPLING POINTS 2 = 1
+    set SAMPLING POINTS 3 = 1
+    set SAMPLING SHIFT 1  = 0
+    set SAMPLING SHIFT 2  = 0
+    set SAMPLING SHIFT 3  = 0
+  end
+end
+subsection DFT functional parameters
+  set AUX BASIS DATA                                    =
+  set AUX BASIS TYPE                                    = FE
+  set EXCHANGE CORRELATION TYPE                         = LDA-PW
+  set INITAL FRACTIONAL OCCUPANCY LIST                  =
+  set MODEL XC INPUT FILE                               =
+  set NET CHARGE                                        = 0.0
+  set NONCOLLINEAR SPIN                                 = false
+  set PAW GPU XC EVALUATION                             = true
+  set PSEUDOPOTENTIAL CALCULATION                       = true
+  set PSEUDOPOTENTIAL FILE NAMES LIST                   = pseudo.inp
+  set PSEUDO TESTS FLAG                                 = false
+  set PSP CUTOFF IMAGE CHARGES                          = 15.0
+  set SPIN POLARIZATION                                 = 0
+  set SPIN-ORBIT COUPLING                               = false
+  set TOTAL MAGNETIZATION                               = 0.0
+  set USE ATOMIC MAGNETIZATION GUESS FOR CONSTRAINT MAG = false
+  set USE LIBXC FOR XC FUNCTIONAL EVALUATION            = true
+  subsection CONFINING POTENTIAL parameters
+    set APPLY CONFINING POTENTIAL = false
+    set C PARAM                   = 1.0
+    set INNER RADIUS              = 17.0
+    set OUTER RADIUS              = 20.0
+    set W PARAM                   = 1.0
+  end
+  subsection Dispersion Correction
+    set CN CUTOFF                  = 40.0
+    set D3 ATM                     = false
+    set D3 DAMPING TYPE            = 3
+    set D4 MBD                     = false
+    set DAMPING PARAMETERS FILE    =
+    set DISPERSION CORRECTION TYPE = 0
+    set THREE BODY CUTOFF          = 40.0
+    set TWO BODY CUTOFF            = 94.8683298050514
+  end
+  subsection Hubbard Parameters
+    set HUBBARD PARAMETERS FILE =
+  end
+end
+subsection Finite element mesh parameters
+  set DENSITY QUADRATURE RULE          = 0
+  set LOCAL POTENTIAL QUADRATURE COPY  = 0
+  set LOCAL POTENTIAL QUADRATURE ORDER = 0
+  set NON LOCAL PSP QUADRATURE COPY    = 0
+  set NON LOCAL PSP QUADRATURE ORDER   = 0
+  set NUCLEAR CHARGE QUADRATURE COPY   = 0
+  set NUCLEAR CHARGE QUADRATURE ORDER  = 0
+  set POLYNOMIAL ORDER                 = 7
+  set POLYNOMIAL ORDER DENSITY NODAL   = 0
+  set POLYNOMIAL ORDER ELECTROSTATICS  = 0
+  set USE HIGH QUADRATURE RULE         = true
+  subsection Auto mesh generation parameters
+    set ATOM BALL RADIUS                  = 6
+    set AUTO ADAPT BASE MESH SIZE         = true
+    set BASE MESH SIZE                    = 0.0
+    set GAUSSIAN CONSTANT FORCE GENERATOR = 0.75
+    set GAUSSIAN ORDER FORCE GENERATOR    = 4.0
+    set GAUSSIAN ORDER MOVE MESH TO ATOMS = 4.0
+    set INNER ATOM BALL RADIUS            = 0.0
+    set MESH SIZES FILE                   =
+    set MESH SIZE AROUND ATOM             = 0.6
+    set MESH SIZE AT ATOM                 = 0.0
+    set NUM LEVELS                        = 10
+    set TOP FRAC                          = 0.1
+    set USE FLAT TOP GENERATOR            = false
+  end
+end
+subsection FunctionalTest
+  set TEST NAME =
+end
+subsection GPU
+  set AUTO GPU BLOCK SIZES         = true
+  set FINE GRAINED GPU TIMINGS     = false
+  set SUBSPACE ROT FULL CPU MEM    = true
+  set USE DCCL                     = false
+  set USE ELPA GPU KERNEL          = false
+  set USE GPUDIRECT MPI ALL REDUCE = false
+end
+subsection Geometry
+  set ATOMIC COORDINATES FILE      = coordinates.inp
+  set ATOMIC DISP COORDINATES FILE =
+  set DOMAIN VECTORS FILE          = domainVectors.inp
+  set NATOMS                       = 2
+  set NATOM TYPES                  = 1
+  subsection Optimization
+    set BFGS STEP METHOD           = QN
+    set CELL CONSTRAINT TYPE       = 12
+    set CELL OPT SOLVER            = LBFGS
+    set CELL STRESS                = false
+    set FORCE TOL                  = 1e-4
+    set ION FORCE                  = true
+    set ION OPT SOLVER             = LBFGS
+    set ION RELAX FLAGS FILE       =
+    set LBFGS HISTORY              = 5
+    set MAXIMUM CELL UPDATE STEP   = 0.1
+    set MAXIMUM ION UPDATE STEP    = 0.5
+    set MAXIMUM OPTIMIZATION STEPS = 300
+    set MAXIMUM STAGGERED CYCLES   = 300
+    set MAX LINE SEARCH ITER       = 5
+    set NON SELF CONSISTENT FORCE  = false
+    set OPTIMIZATION MODE          = ION
+    set REUSE DENSITY              = 1
+    set REUSE WFC                  = true
+    set STRESS TOL                 = 1e-6
+    set USE PRECONDITIONER         = false
+  end
+end
+subsection Helmholtz problem parameters
+  set ABSOLUTE TOLERANCE HELMHOLTZ = 1e-10
+  set MAXIMUM ITERATIONS HELMHOLTZ = 10000
+end
+subsection Molecular Dynamics
+  set ATOMIC MASSES FILE          =
+  set BOMD                        = false
+  set EXTRAPOLATE DENSITY         = 0
+  set MAX JACOBIAN RATIO FACTOR   = 1.5
+  set MAX WALL TIME               = 2592000.0
+  set NUMBER OF STEPS             = 1000
+  set STARTING TEMPERATURE        = 300.0
+  set TEMPERATURE CONTROLLER TYPE = NO_CONTROL
+  set THERMOSTAT TIME CONSTANT    = 100
+  set TIME STEP                   = 0.5
+  set TRACKING ATOMIC NO          = 0
+end
+subsection Parallelization
+  set BAND PARAL OPT           = true
+  set MPI ALLREDUCE BLOCK SIZE = 100.0
+  set NPBAND                   = 1
+  set NPKPT                    = 1
+end
+subsection Poisson problem parameters
+  set GPU MODE           = true
+  set MAXIMUM ITERATIONS = 20000
+  set TOLERANCE          = 1e-10
+  set VSELF GPU MODE     = true
+end
+subsection Post-processing Options
+  set DELTA ENERGY                       = 0.01
+  set DOS SMEAR TEMPERATURE              = 500
+  set PRINT KINETIC ENERGY               = false
+  set READ ATOMIC WFC PDOS FROM PSP FILE = false
+  set WRITE DENSITY FE MESH              = false
+  set WRITE DENSITY OF STATES            = false
+  set WRITE DENSITY QUAD DATA            = false
+  set WRITE LOCALIZATION LENGTHS         = false
+  set WRITE LOCAL DENSITY OF STATES      = false
+  set WRITE PROJECTED DENSITY OF STATES  = false
+  set WRITE WFC FE MESH                  = false
+end
+subsection SCF Checkpointing and Restart
+  set LOAD DELTA SINVERSE DATA            = false
+  set LOAD DIJ DATA                       = false
+  set LOAD QUAD DATA                      = false
+  set MAG PHI                             = 0
+  set MAG THETA                           = 0
+  set RESTART NONCOLLINEAR FROM COLLINEAR = false
+  set RESTART SP FROM NO SP               = false
+  set SAVE DELTA SINVERSE DATA            = false
+  set SAVE DIJ DATA                       = false
+  set SAVE QUAD DATA                      = false
+end
+subsection SCF parameters
+  set ADAPT ANDERSON MIXING PARAMETER         = false
+  set COMPUTE ENERGY EACH ITER                = false
+  set CONSTRAINT MAGNETIZATION                = false
+  set ENERGY TOLERANCE                        = 1e-07
+  set FIXED OCCUPANCY FILE                    =
+  set INVERSE KERKER MIXING PARAMETER         = 0.0
+  set KERKER MIXING PARAMETER                 = 0.05
+  set MAXIMUM ITERATIONS                      = 200
+  set MIXING HISTORY                          = 10
+  set MIXING METHOD                           = ANDERSON
+  set MIXING PARAMETER                        = 0.5
+  set NUMBER OF ATOM CENTERED SHAPE FUNCTIONS = 3
+  set PURE STATE                              = false
+  set RESTA FERMI WAVEVECTOR                  = 5.81
+  set RESTA SCREENING LENGTH                  = 6.61
+  set SPHERICAL QUADRATURE                    = 0
+  set SPIN MIXING ENHANCEMENT FACTOR          = 1.0
+  set STARTING WFC                            = RANDOM
+  set TEMPERATURE                             = 500
+  set TOLERANCE                               = 1e-6
+  set USE APPROX DELTA MATRIX                 = false
+  set USE ENERGY RESIDUAL METRIC              = false
+  set USE FIXED OCCUPANCY                     = false
+  set USE GRAD PHI MIXING                     = false
+  set USE TOTAL CHARGE DENSITY MIXING         = true
+  subsection Eigen-solver parameters
+    set ADAPTIVE USAGE BELOW FP32 PREC                       = true
+    set ALGO                                                 = NORMAL
+    set ALLOW MULTIPLE PASSES POST FIRST SCF                 = true
+    set CHEBYSHEV FILTER TOLERANCE                           = 0.0
+    set CHEBYSHEV POLYNOMIAL DEGREE                          = 0
+    set CHEBYSHEV POLYNOMIAL DEGREE SCALING FACTOR FIRST SCF = 1.34
+    set CHEBY WFC BLOCK SIZE                                 = 200
+    set COMMUN PREC CHEBY                                    = BF16
+    set HIGHEST STATE OF INTEREST FOR CHEBYSHEV FILTERING    = 0
+    set NUMBER OF CORE EIGEN STATES FOR MIXED PREC RR        = 0
+    set NUMBER OF KOHN-SHAM WAVEFUNCTIONS                    = 16
+    set ORTHOGONALIZATION TYPE                               = Auto
+    set OVERLAP COMPUTE COMMUN CHEBY                         = true
+    set OVERLAP COMPUTE COMMUN ORTHO RR                      = true
+    set RESTRICT TO SINGLE FILTER PASS                       = false
+    set REUSE LANCZOS UPPER BOUND                            = false
+    set SCALAPACKPROCS                                       = 0
+    set SCALAPACK BLOCK SIZE                                 = 0
+    set SUBSPACE PROJ SHEP GPU                               = false
+    set SUBSPACE ROT DOFS BLOCK SIZE                         = 10000
+    set TENSOR OP TYPE SINGLE PREC CHEBY                     = TF32
+    set USE APPROXIMATE OVERLAP MATRIX                       = true
+    set USE ELPA                                             = true
+    set USE MIXED PREC CGS SR                                = false
+    set USE MIXED PREC COMMUN ONLY XTOX XTHX                 = false
+    set USE MIXED PREC RR_SR                                 = false
+    set USE MIXED PREC XTHX                                  = false
+    set USE MIXED PREC XTOX                                  = false
+    set USE RESIDUAL CHFSI                                   = true
+    set USE SINGLE PREC CHEBY                                = true
+    set WFC BLOCK SIZE                                       = 400
+  end
+  subsection LOW RANK DIELECM PRECOND
+    set ADAPTIVE RANK REL TOL            = 0.3
+    set BETA TOL                         = 0.1
+    set ESTIMATE JAC CONDITION NO        = false
+    set METHOD SUB TYPE                  = ADAPTIVE
+    set POISSON SOLVER ABS TOL           = 1e-6
+    set STARTING NORM LARGE DAMPING      = 2.0
+    set USE SINGLE PREC DENSITY RESPONSE = false
+  end
+end
+Setting ORTHOGONALIZATION TYPE=CGS for pseudopotential calculations 
+=================================MPI Parallelization=========================================
+Total number of MPI tasks: 4
+k-point parallelization processor groups: 1
+Band parallelization processor groups: 1
+Number of MPI tasks for finite-element domain decomposition: 4
+============================================================================================
+Threads per MPI task: 8
+number of atoms: 2
+number of atoms types: 1
+ Setting the number of Kohn-Sham wave functions for Device run to be: 16
+ Setting CHEBY WFC BLOCK SIZE for Device run to be 16
+ Setting WFC BLOCK SIZE for Device run to be 16
+
+Reading Pseudo-potential data for each atom from the list given in : pseudo.inp
+ Reading Pseudopotential File: O_ONCV_PBE-1.2.upf, with atomic number: 8, has no nonlinear core-correction, and has no SOC
+Atomic system initialization, wall time: 0.0686391s.
+-----------Simulation Domain bounding vectors (lattice vectors in fully periodic case)-------------
+v1 : 3.500000000000000000e+01 0.000000000000000000e+00 0.000000000000000000e+00
+v2 : 0.000000000000000000e+00 3.500000000000000000e+01 0.000000000000000000e+00
+v3 : 0.000000000000000000e+00 0.000000000000000000e+00 3.500000000000000000e+01
+-----------------------------------------------------------------------------------------
+------------Cartesian coordinates of atoms (origin at center of domain)------------------
+AtomId 0:  1.199999999999999956e+00 0.000000000000000000e+00 0.000000000000000000e+00
+AtomId 1:  -1.199999999999999956e+00 0.000000000000000000e+00 0.000000000000000000e+00
+-----------------------------------------------------------------------------------------
+Libxc version: 7.0.0
+X Functional: P. A. M. Dirac.,  Math. Proc. Cambridge Philos. Soc. 26, 376 (1930) (DOI 10.1017/S0305004100016108)
+C Functional: J. P. Perdew and Y. Wang.,  Phys. Rev. B 45, 13244 (1992) (DOI 10.1103/PhysRevB.45.13244)
+
+Finite element mesh information
+-------------------------------------------------
+FE interpolating polynomial order for Kohn-Sham eigenvalue problem: 7
+FE interpolating polynomial order for electrostatics solve: 7
+FE interpolating polynomial order for nodal electron density computation: 9
+quadrature rule for electron density and kinetic energy density computation: 10
+number of elements: 6790
+number of degrees of freedom for the Kohn-Sham eigenvalue problem : 2444439
+Minimum mesh size: 6.250000000000000000e-01
+-------------------------------------------------
+
+-----------------------------------------------------------------------------
+Rough estimate of peak memory requirement (RAM) total: 3.251552767999999816e+00 GB.
+Rough estimate of peak memory requirement (RAM) per MPI task: 8.128881919999999539e-01 GB.
+DFT-FE Message: many of the memory optimizations implemented
+in DFT-FE are useful only for larger system sizes.
+-----------------------------------------------------------------------------
+Determining the ball radius around the atom for nuclear self-potential solve... 
+...Adaptively set ball radius: 4.000000000000000000e+00
+
+Setting initial guess for wavefunctions....
+Number of wavefunctions generated randomly to be used as initial guess for starting the SCF : 16
+=============================================================================================================================
+number of electrons: 1.200000000000000000e+01
+number of eigen values: 16
+=============================================================================================================================
+
+Reading initial guess for electron-density.....
+Initial total charge after normalization: 1.199999999999966604e+01
+Initial total charge after normalization: 1.200000000000002842e+01
+initialize density, wall time: 0.330368s.
+
+Pseudopotential initalization....
+KSDFT problem initialization, wall time: 88.1078s.
+Nuclear self-potential solve, wall time: 6.43833s.
+Init local PSP, wall time: 3.07929s.
+
+************************Begin Self-Consistent-Field Iteration:  1 ***********************
+Fermi Energy computed: -2.393508052713034795e-01
+***********************Self-Consistent-Field Iteration:  1 complete**********************
+Wall time for the above scf iteration: 1.538056077100000074e+01 seconds
+Number of Chebyshev filtered subspace iterations: 11
+
+************************Begin Self-Consistent-Field Iteration:  2 ***********************
+Timer for computeAndersonMixingCoeff: 2.053000002888438758e-06
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 1.598572750005016196e-01
+Fermi Energy computed: -2.409124236303175903e-01
+***********************Self-Consistent-Field Iteration:  2 complete**********************
+Wall time for the above scf iteration: 2.614124134999999960e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration:  3 ***********************
+Timer for computeAndersonMixingCoeff: 7.201392000013129291e-03
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 1.072682783676308926e-01
+Fermi Energy computed: -2.382559922881403447e-01
+***********************Self-Consistent-Field Iteration:  3 complete**********************
+Wall time for the above scf iteration: 2.440694221000000219e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration:  4 ***********************
+Timer for computeAndersonMixingCoeff: 1.452444499999216987e-02
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 1.876333460938352238e-01
+Fermi Energy computed: -2.355965020300342938e-01
+***********************Self-Consistent-Field Iteration:  4 complete**********************
+Wall time for the above scf iteration: 2.600555610999999878e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration:  5 ***********************
+Timer for computeAndersonMixingCoeff: 2.803264499999613690e-02
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 1.175612219202036915e-02
+Fermi Energy computed: -2.345129629633062041e-01
+***********************Self-Consistent-Field Iteration:  5 complete**********************
+Wall time for the above scf iteration: 2.324450069000000063e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration:  6 ***********************
+Timer for computeAndersonMixingCoeff: 4.647120499998891319e-02
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 2.045191275128480785e-03
+Fermi Energy computed: -2.347404586540843829e-01
+***********************Self-Consistent-Field Iteration:  6 complete**********************
+Wall time for the above scf iteration: 2.293266916999999960e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration:  7 ***********************
+Timer for computeAndersonMixingCoeff: 7.079852000001096712e-02
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 2.135708215744995270e-03
+Fermi Energy computed: -2.347447256402060700e-01
+***********************Self-Consistent-Field Iteration:  7 complete**********************
+Wall time for the above scf iteration: 2.150617934000000009e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration:  8 ***********************
+Timer for computeAndersonMixingCoeff: 8.900474999998664316e-02
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 1.022684930572255154e-03
+Fermi Energy computed: -2.347629771437924617e-01
+***********************Self-Consistent-Field Iteration:  8 complete**********************
+Wall time for the above scf iteration: 2.153354467999999855e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration:  9 ***********************
+Timer for computeAndersonMixingCoeff: 1.347151729999893632e-01
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 1.724458293943291422e-04
+Fermi Energy computed: -2.347589649075582097e-01
+***********************Self-Consistent-Field Iteration:  9 complete**********************
+Wall time for the above scf iteration: 2.159522192999999923e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 10 ***********************
+Timer for computeAndersonMixingCoeff: 1.683840949999932946e-01
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 1.831209259102017223e-04
+Fermi Energy computed: -2.347598744519885094e-01
+***********************Self-Consistent-Field Iteration: 10 complete**********************
+Wall time for the above scf iteration: 2.238226340000000203e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 11 ***********************
+Timer for computeAndersonMixingCoeff: 2.084450959999912811e-01
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 4.603503500824341742e-05
+Fermi Energy computed: -2.347667878353000004e-01
+***********************Self-Consistent-Field Iteration: 11 complete**********************
+Wall time for the above scf iteration: 2.392784814000000093e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 12 ***********************
+Timer for computeAndersonMixingCoeff: 2.307853979999947569e-01
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 1.626778160921614334e-05
+Fermi Energy computed: -2.347665719402716178e-01
+***********************Self-Consistent-Field Iteration: 12 complete**********************
+Wall time for the above scf iteration: 2.402094361000000067e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 13 ***********************
+Timer for computeAndersonMixingCoeff: 2.073913910000158012e-01
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 8.372880346086224970e-06
+Fermi Energy computed: -2.347668984811185633e-01
+***********************Self-Consistent-Field Iteration: 13 complete**********************
+Wall time for the above scf iteration: 2.167202362999999909e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 14 ***********************
+Timer for computeAndersonMixingCoeff: 1.987175179999951524e-01
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 4.957230346647013229e-06
+Fermi Energy computed: -2.347670106254086952e-01
+***********************Self-Consistent-Field Iteration: 14 complete**********************
+Wall time for the above scf iteration: 2.105824258999999810e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 15 ***********************
+Timer for computeAndersonMixingCoeff: 1.983683980000137126e-01
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 3.452164091209868117e-06
+Fermi Energy computed: -2.347669202363112384e-01
+***********************Self-Consistent-Field Iteration: 15 complete**********************
+Wall time for the above scf iteration: 2.167504826000000051e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 16 ***********************
+Timer for computeAndersonMixingCoeff: 2.080092620000186798e-01
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 3.991941929115190770e-07
+Fermi Energy computed: -2.347669268515515661e-01
+***********************Self-Consistent-Field Iteration: 16 complete**********************
+Wall time for the above scf iteration: 2.908686315999999827e+00 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+SCF iterations converged to the specified tolerance after: 16 iterations.
+GS Fermi energy spin up: -2.347669268515515661e-01
+ Printing KS eigen values (spin split if this is a spin polarized calculation ) and fractional occupancies for kPoint 0
+  
+0 : -1.158289922665868277e+00       1.000000000000000000e+00
+1 : -7.481704432564068030e-01       1.000000000000000000e+00
+2 : -4.848134173119497681e-01       1.000000000000000000e+00
+3 : -4.564238426560066619e-01       1.000000000000000000e+00
+4 : -4.564238377495358767e-01       1.000000000000000000e+00
+5 : -2.347669283244170069e-01       5.000002325470703779e-01
+6 : -2.347669253786861254e-01       4.999997674529296221e-01
+7 : -1.776616426473141266e-04       4.541070031659259104e-65
+8 : 4.959588090012029965e-03       1.770597934796891507e-66
+9 : 8.071517464027554503e-03       2.480755534583170130e-67
+10 : 8.147484022550695662e-03       2.364547044274323384e-67
+11 : 1.113401177576808093e-02       3.585972624617328629e-68
+12 : 1.494979967369714120e-02       3.221199145414415124e-69
+13 : 1.724223549614269796e-02       7.572708290950697219e-70
+14 : 1.755314698273090918e-02       6.222642132229733451e-70
+15 : 2.445170758633363750e-02       7.977126877656218063e-72
+============================================================================================================
+
+Energy computations (Hartree)
+-------------------------------------------------------------------------------
+Band energy                                         :  -7.0777767809826404e+00
+Exchange energy                                     :  -5.8309379791788070e+00
+Correlation energy                                  :  -7.1304337002534257e-01
+Total internal energy                               :  -3.1604451450707536e+01
+Total internal energy per atom                      :  -1.5802225725353768e+01
+-------------------------------------------------------------------------------
+Total entropic energy: 4.390132826752038073e-03
+Total free energy: -3.160884158353428930e+01
+Total scf solve, wall time: 52.8626s.
+
+Ion forces (Hartree/Bohr)
+--------------------------------------------------------------------------------------------
+   0     -6.161560764638451815e-02   5.653004466566984397e-07   3.046725530024055580e-07
+   1     6.161560764638451815e-02   -5.653004466566984397e-07   -3.046725530024055580e-07
+--------------------------------------------------------------------------------------------
+ Maximum absolute force atom id: 0, Force vec: -6.161560764638451815e-02,5.653004466566984397e-07,3.046725530024055580e-07
+ Sum of absolute value of all force components over all atoms: 1.232329552387683574e-01
+ Sum of all forces in each component: 0.000000000000000000e+00 0.000000000000000000e+00 0.000000000000000000e+00
+Force and Stress computation, wall time: 16.2999s.
+
+------------------DFT-FE ground-state solve completed---------------------------
+
+
++---------------------------------------------+------------+------------+
+| Total wallclock time elapsed since start    | 1.689e+02s |            |
+|                                             |            |            |
+| Section                         | no. calls |  wall time | % of total |
++---------------------------------+-----------+------------+------------+
+| Atomic system initialization    |         1 | 6.864e-02s | 0.000e+00% |
+| Force and Stress computation    |         1 | 1.630e+01s |  9.65e+00% |
+| Init local PSP                  |         1 | 3.079e+00s |  1.82e+00% |
+| KSDFT problem initialization    |         1 | 8.811e+01s |  5.22e+01% |
+| Nuclear self-potential solve    |         1 | 6.438e+00s |  3.81e+00% |
+| Total scf solve                 |         1 | 5.286e+01s |  3.13e+01% |
+| initialize density              |         1 | 3.304e-01s |  1.96e-01% |
++---------------------------------+-----------+------------+------------+
+
+=============================================================================================
+DFT-FE Program ends. Elapsed wall time since start of the program: 1.718475899510000033e+02 seconds.
+=============================================================================================

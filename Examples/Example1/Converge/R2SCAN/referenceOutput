@@ -1,0 +1,1122 @@
+==========================================================================================================
+==========================================================================================================
+			Welcome to the Open Source program DFT-FE version	1.1.0-pre		        
+This is a C++ code for materials modeling from first principles using Kohn-Sham density functional theory.
+This is a real-space code for periodic, semi-periodic and non-periodic pseudopotential
+and all-electron calculations, and is based on adaptive finite-element discretization.
+For further details, and citing, please refer to our website: https://sites.google.com/umich.edu/dftfe
+==========================================================================================================
+ DFT-FE Mentors and Development leads (alphabetically) :									
+														
+ Sambit Das               - University of Michigan, USA
+ Vikram Gavini            - University of Michigan, USA
+ Phani Motamarri          - Indian Institute of Science, India
+ (A complete list of the many authors that have contributed to DFT-FE can be found in the authors file)
+==========================================================================================================
+ 	     Copyright (c) 2017-2025 The Regents of the University of Michigan and DFT-FE authors         
+ 			DFT-FE is published under [LGPL v2.1 or newer] 				
+==========================================================================================================
+==========================================================================================================
+ DFT-FE branch: workshopBranch, commit: 43c0b9fe9c8f4731e3b4c4eb51ae280e887ad9c5
+ compiled with GPU support, using CUDA, with device-aware MPI support, with NCCL support, with OpenMP support, with 64 bit integers, and with HIGHERQUAD_PSP
+==========================================================================================================
+set RESTART        = false
+set RESTART FOLDER = restartFolder
+set SOLVER MODE    = GS
+set USE GPU        = true
+set VERBOSITY      = 1
+subsection NEB
+  set ALLOW IMAGE FREEZING             = false
+  set BFGS STEP METHOD                 = QN
+  set ION RELAX FLAGS FILE             =
+  set LBFGS HISTORY                    = 5
+  set MAXIMUM ION UPDATE STEP          = 0.5
+  set MAXIMUM NUMBER OF NEB ITERATIONS = 100
+  set MAXIMUM SPRING CONSTANT          = 5e-3
+  set MAX LINE SEARCH ITER             = 5
+  set MINIMUM SPRING CONSTANT          = 2e-3
+  set NEB COORDINATES FILE             =
+  set NEB DOMAIN VECTORS FILE          =
+  set NEB OPT SOLVER                   = LBFGS
+  set NUMBER OF IMAGES                 = 7
+  set PATH THRESHOLD                   = 5e-4
+end
+set KEEP SCRATCH FOLDER                             = false
+set MEM OPT MODE                                    = false
+set REPRODUCIBLE OUTPUT                             = false
+set WRITE STRUCTURE ENERGY FORCES DATA POST PROCESS = false
+subsection Boundary conditions
+  set APPLY NEUMANN BOUNDARY CONDITION   = false
+  set CONSTRAINTS FROM SERIAL DOFHANDLER = false
+  set CONSTRAINTS PARALLEL CHECK         = false
+  set FLOATING NUCLEAR CHARGES           = true
+  set MULTIPOLE BOUNDARY CONDITIONS      = false
+  set PERIODIC1                          = false
+  set PERIODIC2                          = false
+  set PERIODIC3                          = false
+  set POINT WISE DIRICHLET CONSTRAINT    = false
+  set SELF POTENTIAL RADIUS              = 0.0
+  set SMEARED NUCLEAR CHARGES            = true
+end
+subsection Brillouin zone k point sampling options
+  set USE GROUP SYMMETRY         = false
+  set USE TIME REVERSAL SYMMETRY = false
+  set kPOINT RULE FILE           =
+  subsection Monkhorst-Pack (MP) grid generation
+    set SAMPLING POINTS 1 = 1
+    set SAMPLING POINTS 2 = 1
+    set SAMPLING POINTS 3 = 1
+    set SAMPLING SHIFT 1  = 0
+    set SAMPLING SHIFT 2  = 0
+    set SAMPLING SHIFT 3  = 0
+  end
+end
+subsection DFT functional parameters
+  set AUX BASIS DATA                                    =
+  set AUX BASIS TYPE                                    = FE
+  set EXCHANGE CORRELATION TYPE                         = MGGA-R2SCAN
+  set INITAL FRACTIONAL OCCUPANCY LIST                  =
+  set MODEL XC INPUT FILE                               =
+  set NET CHARGE                                        = 0.0
+  set NONCOLLINEAR SPIN                                 = false
+  set PAW GPU XC EVALUATION                             = true
+  set PSEUDOPOTENTIAL CALCULATION                       = true
+  set PSEUDOPOTENTIAL FILE NAMES LIST                   = pseudo.inp
+  set PSEUDO TESTS FLAG                                 = false
+  set PSP CUTOFF IMAGE CHARGES                          = 15.0
+  set SPIN POLARIZATION                                 = 0
+  set SPIN-ORBIT COUPLING                               = false
+  set TOTAL MAGNETIZATION                               = 0.0
+  set USE ATOMIC MAGNETIZATION GUESS FOR CONSTRAINT MAG = false
+  set USE LIBXC FOR XC FUNCTIONAL EVALUATION            = true
+  subsection CONFINING POTENTIAL parameters
+    set APPLY CONFINING POTENTIAL = false
+    set C PARAM                   = 1.0
+    set INNER RADIUS              = 17.0
+    set OUTER RADIUS              = 20.0
+    set W PARAM                   = 1.0
+  end
+  subsection Dispersion Correction
+    set CN CUTOFF                  = 40.0
+    set D3 ATM                     = false
+    set D3 DAMPING TYPE            = 3
+    set D4 MBD                     = false
+    set DAMPING PARAMETERS FILE    =
+    set DISPERSION CORRECTION TYPE = 0
+    set THREE BODY CUTOFF          = 40.0
+    set TWO BODY CUTOFF            = 94.8683298050514
+  end
+  subsection Hubbard Parameters
+    set HUBBARD PARAMETERS FILE =
+  end
+end
+subsection Finite element mesh parameters
+  set DENSITY QUADRATURE RULE          = 0
+  set LOCAL POTENTIAL QUADRATURE COPY  = 0
+  set LOCAL POTENTIAL QUADRATURE ORDER = 0
+  set NON LOCAL PSP QUADRATURE COPY    = 0
+  set NON LOCAL PSP QUADRATURE ORDER   = 0
+  set NUCLEAR CHARGE QUADRATURE COPY   = 0
+  set NUCLEAR CHARGE QUADRATURE ORDER  = 0
+  set POLYNOMIAL ORDER                 = 7
+  set POLYNOMIAL ORDER DENSITY NODAL   = 0
+  set POLYNOMIAL ORDER ELECTROSTATICS  = 0
+  set USE HIGH QUADRATURE RULE         = true
+  subsection Auto mesh generation parameters
+    set ATOM BALL RADIUS                  = 6
+    set AUTO ADAPT BASE MESH SIZE         = true
+    set BASE MESH SIZE                    = 0.0
+    set GAUSSIAN CONSTANT FORCE GENERATOR = 0.75
+    set GAUSSIAN ORDER FORCE GENERATOR    = 4.0
+    set GAUSSIAN ORDER MOVE MESH TO ATOMS = 4.0
+    set INNER ATOM BALL RADIUS            = 0.0
+    set MESH SIZES FILE                   =
+    set MESH SIZE AROUND ATOM             = 0.6
+    set MESH SIZE AT ATOM                 = 0.0
+    set NUM LEVELS                        = 10
+    set TOP FRAC                          = 0.1
+    set USE FLAT TOP GENERATOR            = false
+  end
+end
+subsection FunctionalTest
+  set TEST NAME =
+end
+subsection GPU
+  set AUTO GPU BLOCK SIZES         = true
+  set FINE GRAINED GPU TIMINGS     = false
+  set SUBSPACE ROT FULL CPU MEM    = true
+  set USE DCCL                     = false
+  set USE ELPA GPU KERNEL          = false
+  set USE GPUDIRECT MPI ALL REDUCE = false
+end
+subsection Geometry
+  set ATOMIC COORDINATES FILE      = coordinates.inp
+  set ATOMIC DISP COORDINATES FILE =
+  set DOMAIN VECTORS FILE          = domainVectors.inp
+  set NATOMS                       = 2
+  set NATOM TYPES                  = 1
+  subsection Optimization
+    set BFGS STEP METHOD           = QN
+    set CELL CONSTRAINT TYPE       = 12
+    set CELL OPT SOLVER            = LBFGS
+    set CELL STRESS                = false
+    set FORCE TOL                  = 1e-4
+    set ION FORCE                  = true
+    set ION OPT SOLVER             = LBFGS
+    set ION RELAX FLAGS FILE       =
+    set LBFGS HISTORY              = 5
+    set MAXIMUM CELL UPDATE STEP   = 0.1
+    set MAXIMUM ION UPDATE STEP    = 0.5
+    set MAXIMUM OPTIMIZATION STEPS = 300
+    set MAXIMUM STAGGERED CYCLES   = 300
+    set MAX LINE SEARCH ITER       = 5
+    set NON SELF CONSISTENT FORCE  = false
+    set OPTIMIZATION MODE          = ION
+    set REUSE DENSITY              = 1
+    set REUSE WFC                  = true
+    set STRESS TOL                 = 1e-6
+    set USE PRECONDITIONER         = false
+  end
+end
+subsection Helmholtz problem parameters
+  set ABSOLUTE TOLERANCE HELMHOLTZ = 1e-10
+  set MAXIMUM ITERATIONS HELMHOLTZ = 10000
+end
+subsection Molecular Dynamics
+  set ATOMIC MASSES FILE          =
+  set BOMD                        = false
+  set EXTRAPOLATE DENSITY         = 0
+  set MAX JACOBIAN RATIO FACTOR   = 1.5
+  set MAX WALL TIME               = 2592000.0
+  set NUMBER OF STEPS             = 1000
+  set STARTING TEMPERATURE        = 300.0
+  set TEMPERATURE CONTROLLER TYPE = NO_CONTROL
+  set THERMOSTAT TIME CONSTANT    = 100
+  set TIME STEP                   = 0.5
+  set TRACKING ATOMIC NO          = 0
+end
+subsection Parallelization
+  set BAND PARAL OPT           = true
+  set MPI ALLREDUCE BLOCK SIZE = 100.0
+  set NPBAND                   = 1
+  set NPKPT                    = 1
+end
+subsection Poisson problem parameters
+  set GPU MODE           = true
+  set MAXIMUM ITERATIONS = 20000
+  set TOLERANCE          = 1e-10
+  set VSELF GPU MODE     = true
+end
+subsection Post-processing Options
+  set DELTA ENERGY                       = 0.01
+  set DOS SMEAR TEMPERATURE              = 500
+  set PRINT KINETIC ENERGY               = false
+  set READ ATOMIC WFC PDOS FROM PSP FILE = false
+  set WRITE DENSITY FE MESH              = false
+  set WRITE DENSITY OF STATES            = false
+  set WRITE DENSITY QUAD DATA            = false
+  set WRITE LOCALIZATION LENGTHS         = false
+  set WRITE LOCAL DENSITY OF STATES      = false
+  set WRITE PROJECTED DENSITY OF STATES  = false
+  set WRITE WFC FE MESH                  = false
+end
+subsection SCF Checkpointing and Restart
+  set LOAD DELTA SINVERSE DATA            = false
+  set LOAD DIJ DATA                       = false
+  set LOAD QUAD DATA                      = false
+  set MAG PHI                             = 0
+  set MAG THETA                           = 0
+  set RESTART NONCOLLINEAR FROM COLLINEAR = false
+  set RESTART SP FROM NO SP               = false
+  set SAVE DELTA SINVERSE DATA            = false
+  set SAVE DIJ DATA                       = false
+  set SAVE QUAD DATA                      = false
+end
+subsection SCF parameters
+  set ADAPT ANDERSON MIXING PARAMETER         = false
+  set COMPUTE ENERGY EACH ITER                = false
+  set CONSTRAINT MAGNETIZATION                = false
+  set ENERGY TOLERANCE                        = 1e-07
+  set FIXED OCCUPANCY FILE                    =
+  set INVERSE KERKER MIXING PARAMETER         = 0.0
+  set KERKER MIXING PARAMETER                 = 0.05
+  set MAXIMUM ITERATIONS                      = 200
+  set MIXING HISTORY                          = 10
+  set MIXING METHOD                           = ANDERSON
+  set MIXING PARAMETER                        = 0.5
+  set NUMBER OF ATOM CENTERED SHAPE FUNCTIONS = 3
+  set PURE STATE                              = false
+  set RESTA FERMI WAVEVECTOR                  = 5.81
+  set RESTA SCREENING LENGTH                  = 6.61
+  set SPHERICAL QUADRATURE                    = 0
+  set SPIN MIXING ENHANCEMENT FACTOR          = 1.0
+  set STARTING WFC                            = RANDOM
+  set TEMPERATURE                             = 500
+  set TOLERANCE                               = 1e-6
+  set USE APPROX DELTA MATRIX                 = false
+  set USE ENERGY RESIDUAL METRIC              = false
+  set USE FIXED OCCUPANCY                     = false
+  set USE GRAD PHI MIXING                     = false
+  set USE TOTAL CHARGE DENSITY MIXING         = true
+  subsection Eigen-solver parameters
+    set ADAPTIVE USAGE BELOW FP32 PREC                       = true
+    set ALGO                                                 = NORMAL
+    set ALLOW MULTIPLE PASSES POST FIRST SCF                 = true
+    set CHEBYSHEV FILTER TOLERANCE                           = 0.0
+    set CHEBYSHEV POLYNOMIAL DEGREE                          = 0
+    set CHEBYSHEV POLYNOMIAL DEGREE SCALING FACTOR FIRST SCF = 1.34
+    set CHEBY WFC BLOCK SIZE                                 = 200
+    set COMMUN PREC CHEBY                                    = BF16
+    set HIGHEST STATE OF INTEREST FOR CHEBYSHEV FILTERING    = 0
+    set NUMBER OF CORE EIGEN STATES FOR MIXED PREC RR        = 0
+    set NUMBER OF KOHN-SHAM WAVEFUNCTIONS                    = 16
+    set ORTHOGONALIZATION TYPE                               = Auto
+    set OVERLAP COMPUTE COMMUN CHEBY                         = true
+    set OVERLAP COMPUTE COMMUN ORTHO RR                      = true
+    set RESTRICT TO SINGLE FILTER PASS                       = false
+    set REUSE LANCZOS UPPER BOUND                            = false
+    set SCALAPACKPROCS                                       = 0
+    set SCALAPACK BLOCK SIZE                                 = 0
+    set SUBSPACE PROJ SHEP GPU                               = false
+    set SUBSPACE ROT DOFS BLOCK SIZE                         = 10000
+    set TENSOR OP TYPE SINGLE PREC CHEBY                     = TF32
+    set USE APPROXIMATE OVERLAP MATRIX                       = true
+    set USE ELPA                                             = true
+    set USE MIXED PREC CGS SR                                = false
+    set USE MIXED PREC COMMUN ONLY XTOX XTHX                 = false
+    set USE MIXED PREC RR_SR                                 = false
+    set USE MIXED PREC XTHX                                  = false
+    set USE MIXED PREC XTOX                                  = false
+    set USE RESIDUAL CHFSI                                   = true
+    set USE SINGLE PREC CHEBY                                = true
+    set WFC BLOCK SIZE                                       = 400
+  end
+  subsection LOW RANK DIELECM PRECOND
+    set ADAPTIVE RANK REL TOL            = 0.3
+    set BETA TOL                         = 0.1
+    set ESTIMATE JAC CONDITION NO        = false
+    set METHOD SUB TYPE                  = ADAPTIVE
+    set POISSON SOLVER ABS TOL           = 1e-6
+    set STARTING NORM LARGE DAMPING      = 2.0
+    set USE SINGLE PREC DENSITY RESPONSE = false
+  end
+end
+Setting ORTHOGONALIZATION TYPE=CGS for pseudopotential calculations 
+=================================MPI Parallelization=========================================
+Total number of MPI tasks: 4
+k-point parallelization processor groups: 1
+Band parallelization processor groups: 1
+Number of MPI tasks for finite-element domain decomposition: 4
+============================================================================================
+Threads per MPI task: 8
+number of atoms: 2
+number of atoms types: 1
+ Setting the number of Kohn-Sham wave functions for Device run to be: 16
+ Setting CHEBY WFC BLOCK SIZE for Device run to be 16
+ Setting WFC BLOCK SIZE for Device run to be 16
+
+Reading Pseudo-potential data for each atom from the list given in : pseudo.inp
+ Reading Pseudopotential File: O_ONCV_PBE-1.2.upf, with atomic number: 8, has no nonlinear core-correction, and has no SOC
+Atomic system initialization, wall time: 0.0538718s.
+-----------Simulation Domain bounding vectors (lattice vectors in fully periodic case)-------------
+v1 : 3.500000000000000000e+01 0.000000000000000000e+00 0.000000000000000000e+00
+v2 : 0.000000000000000000e+00 3.500000000000000000e+01 0.000000000000000000e+00
+v3 : 0.000000000000000000e+00 0.000000000000000000e+00 3.500000000000000000e+01
+-----------------------------------------------------------------------------------------
+------------Cartesian coordinates of atoms (origin at center of domain)------------------
+AtomId 0:  1.199999999999999956e+00 0.000000000000000000e+00 0.000000000000000000e+00
+AtomId 1:  -1.199999999999999956e+00 0.000000000000000000e+00 0.000000000000000000e+00
+-----------------------------------------------------------------------------------------
+Libxc version: 7.0.0
+X Functional: J. W. Furness, A. D. Kaplan, J. Ning, J. P. Perdew, and J. Sun.,  J. Phys. Chem. Lett. 11, 8208-8215 (2020) (DOI 10.1021/acs.jpclett.0c02405)
+C Functional: J. W. Furness, A. D. Kaplan, J. Ning, J. P. Perdew, and J. Sun.,  J. Phys. Chem. Lett. 11, 8208-8215 (2020) (DOI 10.1021/acs.jpclett.0c02405)
+
+Finite element mesh information
+-------------------------------------------------
+FE interpolating polynomial order for Kohn-Sham eigenvalue problem: 7
+FE interpolating polynomial order for electrostatics solve: 7
+FE interpolating polynomial order for nodal electron density computation: 9
+quadrature rule for electron density and kinetic energy density computation: 16
+number of elements: 6790
+number of degrees of freedom for the Kohn-Sham eigenvalue problem : 2444439
+Minimum mesh size: 6.250000000000000000e-01
+-------------------------------------------------
+
+-----------------------------------------------------------------------------
+Rough estimate of peak memory requirement (RAM) total: 3.251552767999999816e+00 GB.
+Rough estimate of peak memory requirement (RAM) per MPI task: 8.128881919999999539e-01 GB.
+DFT-FE Message: many of the memory optimizations implemented
+in DFT-FE are useful only for larger system sizes.
+-----------------------------------------------------------------------------
+Determining the ball radius around the atom for nuclear self-potential solve... 
+...Adaptively set ball radius: 4.000000000000000000e+00
+
+Setting initial guess for wavefunctions....
+Number of wavefunctions generated randomly to be used as initial guess for starting the SCF : 16
+=============================================================================================================================
+number of electrons: 1.200000000000000000e+01
+number of eigen values: 16
+=============================================================================================================================
+
+Reading initial guess for electron-density.....
+Initial total charge after normalization: 1.199999999999793765e+01
+Initial total charge after normalization: 1.199999999999999822e+01
+initialize density, wall time: 2.61765s.
+
+Pseudopotential initalization....
+KSDFT problem initialization, wall time: 93.7425s.
+Nuclear self-potential solve, wall time: 12.1259s.
+Init local PSP, wall time: 3.13173s.
+
+************************Begin Self-Consistent-Field Iteration:  1 ***********************
+Fermi Energy computed: -2.589926637291750655e-01
+***********************Self-Consistent-Field Iteration:  1 complete**********************
+Wall time for the above scf iteration: 2.723977788199999850e+01 seconds
+Number of Chebyshev filtered subspace iterations: 11
+
+************************Begin Self-Consistent-Field Iteration:  2 ***********************
+Timer for computeAndersonMixingCoeff: 3.257000003031862434e-06
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 1.632252413379211009e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 3.653821966267038590e+00
+ANDERSON mixing, L2 norm of total density difference: 2.586219000837453486e+00
+Fermi Energy computed: -4.313175531336779756e+01
+***********************Self-Consistent-Field Iteration:  2 complete**********************
+Wall time for the above scf iteration: 1.782582031400000133e+01 seconds
+Number of Chebyshev filtered subspace iterations: 3
+
+************************Begin Self-Consistent-Field Iteration:  3 ***********************
+Timer for computeAndersonMixingCoeff: 1.021727309999960198e-01
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 1.652611571686038516e+01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 9.979612845593985639e+02
+ANDERSON mixing, L2 norm of total density difference: 7.057619421519311800e+02
+Fermi Energy computed: -3.565250461257232661e+00
+***********************Self-Consistent-Field Iteration:  3 complete**********************
+Wall time for the above scf iteration: 2.131745687000000089e+01 seconds
+Number of Chebyshev filtered subspace iterations: 7
+
+************************Begin Self-Consistent-Field Iteration:  4 ***********************
+Timer for computeAndersonMixingCoeff: 1.820946979999860105e-01
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 8.949984557298655830e+00
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 3.317056198074840836e+02
+ANDERSON mixing, L2 norm of total density difference: 2.346366557418544687e+02
+Fermi Energy computed: 3.309944112412964434e-02
+***********************Self-Consistent-Field Iteration:  4 complete**********************
+Wall time for the above scf iteration: 2.609408305199999845e+01 seconds
+Number of Chebyshev filtered subspace iterations: 12
+
+************************Begin Self-Consistent-Field Iteration:  5 ***********************
+Timer for computeAndersonMixingCoeff: 3.436059569999940777e-01
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 4.010758921347964412e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.446423863673686805e+00
+ANDERSON mixing, L2 norm of total density difference: 1.061367953316953772e+00
+Fermi Energy computed: -7.265776373654443399e-01
+***********************Self-Consistent-Field Iteration:  5 complete**********************
+Wall time for the above scf iteration: 2.032044097800000060e+01 seconds
+Number of Chebyshev filtered subspace iterations: 4
+
+************************Begin Self-Consistent-Field Iteration:  6 ***********************
+Timer for computeAndersonMixingCoeff: 4.797210799999902520e-01
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 5.564248195943378716e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 2.670716706857953149e+00
+ANDERSON mixing, L2 norm of total density difference: 1.929032958265718856e+00
+Fermi Energy computed: -7.716331994047015419e-01
+***********************Self-Consistent-Field Iteration:  6 complete**********************
+Wall time for the above scf iteration: 1.785033588800000004e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration:  7 ***********************
+Timer for computeAndersonMixingCoeff: 6.727422020000233260e-01
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 4.444692643042467695e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.723771019179986208e+00
+ANDERSON mixing, L2 norm of total density difference: 1.258757215168192500e+00
+Fermi Energy computed: -5.786634194310599222e-01
+***********************Self-Consistent-Field Iteration:  7 complete**********************
+Wall time for the above scf iteration: 1.939887481399999913e+01 seconds
+Number of Chebyshev filtered subspace iterations: 2
+
+************************Begin Self-Consistent-Field Iteration:  8 ***********************
+Timer for computeAndersonMixingCoeff: 9.013323450000143566e-01
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 5.108195941168808263e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.025475323551543472e+00
+ANDERSON mixing, L2 norm of total density difference: 8.101037887045331454e-01
+Fermi Energy computed: -6.105877261873595696e-01
+***********************Self-Consistent-Field Iteration:  8 complete**********************
+Wall time for the above scf iteration: 1.858742224299999890e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration:  9 ***********************
+Timer for computeAndersonMixingCoeff: 1.238645225000027494e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 4.644426180595666587e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.068154305593873588e+00
+ANDERSON mixing, L2 norm of total density difference: 8.236080882400180769e-01
+Fermi Energy computed: -5.905912511158903921e-01
+***********************Self-Consistent-Field Iteration:  9 complete**********************
+Wall time for the above scf iteration: 1.951298993700000040e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 10 ***********************
+Timer for computeAndersonMixingCoeff: 1.559356692999983807e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 5.189604348753427132e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.053194465363907595e+00
+ANDERSON mixing, L2 norm of total density difference: 8.302224144285590413e-01
+Fermi Energy computed: -5.977057177540572308e-01
+***********************Self-Consistent-Field Iteration: 10 complete**********************
+Wall time for the above scf iteration: 1.982726714500000043e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 11 ***********************
+Timer for computeAndersonMixingCoeff: 2.029029682999976103e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 3.975607396212958999e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 9.696435771252069902e-01
+ANDERSON mixing, L2 norm of total density difference: 7.410341450798333396e-01
+Fermi Energy computed: -5.344935402492094756e-01
+***********************Self-Consistent-Field Iteration: 11 complete**********************
+Wall time for the above scf iteration: 2.066016955899999985e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 12 ***********************
+Timer for computeAndersonMixingCoeff: 2.047084447999964141e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 2.611798283796181175e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 7.044343782553341704e-01
+ANDERSON mixing, L2 norm of total density difference: 5.312450922222180516e-01
+Fermi Energy computed: -5.685004112725200454e-01
+***********************Self-Consistent-Field Iteration: 12 complete**********************
+Wall time for the above scf iteration: 2.066510744200000005e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 13 ***********************
+Timer for computeAndersonMixingCoeff: 1.998071742000036011e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 3.268350182192270581e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 8.652399129368293362e-01
+ANDERSON mixing, L2 norm of total density difference: 6.540111757735086462e-01
+Fermi Energy computed: -4.450523356091509175e-01
+***********************Self-Consistent-Field Iteration: 13 complete**********************
+Wall time for the above scf iteration: 2.048345220699999913e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 14 ***********************
+Timer for computeAndersonMixingCoeff: 2.137320025999997597e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 4.424365483885264738e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 8.434820626921926134e-01
+ANDERSON mixing, L2 norm of total density difference: 6.735028171557372323e-01
+Fermi Energy computed: -3.592163996074245191e-01
+***********************Self-Consistent-Field Iteration: 14 complete**********************
+Wall time for the above scf iteration: 2.089711643600000102e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 15 ***********************
+Timer for computeAndersonMixingCoeff: 2.062671765999994022e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 5.658233284476910097e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 9.071278982662502877e-01
+ANDERSON mixing, L2 norm of total density difference: 7.559884466142879900e-01
+Fermi Energy computed: -2.288426532875328656e-01
+***********************Self-Consistent-Field Iteration: 15 complete**********************
+Wall time for the above scf iteration: 2.051670061900000164e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 16 ***********************
+Timer for computeAndersonMixingCoeff: 2.149942183000007390e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 5.919877034315893516e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 8.531244687172027108e-01
+ANDERSON mixing, L2 norm of total density difference: 7.342584014290258754e-01
+Fermi Energy computed: -2.358028433944619195e-01
+***********************Self-Consistent-Field Iteration: 16 complete**********************
+Wall time for the above scf iteration: 2.098871846899999838e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 17 ***********************
+Timer for computeAndersonMixingCoeff: 2.142637368999999126e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 4.641931549958598913e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 6.694521753372107975e-01
+ANDERSON mixing, L2 norm of total density difference: 5.760388442669183151e-01
+Fermi Energy computed: -2.343881479510889765e-01
+***********************Self-Consistent-Field Iteration: 17 complete**********************
+Wall time for the above scf iteration: 2.084018809499999847e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 18 ***********************
+Timer for computeAndersonMixingCoeff: 2.092373215999998592e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 1.530498137296365802e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 2.206615903858914485e-01
+ANDERSON mixing, L2 norm of total density difference: 1.898891557650244089e-01
+Fermi Energy computed: -2.387656980193725853e-01
+***********************Self-Consistent-Field Iteration: 18 complete**********************
+Wall time for the above scf iteration: 2.079165649700000174e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 19 ***********************
+Timer for computeAndersonMixingCoeff: 2.156453521000003093e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 1.155984247557871464e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.623491477907547387e-01
+ANDERSON mixing, L2 norm of total density difference: 1.409259408242565237e-01
+Fermi Energy computed: -2.393911055450462788e-01
+***********************Self-Consistent-Field Iteration: 19 complete**********************
+Wall time for the above scf iteration: 2.092037636099999887e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 20 ***********************
+Timer for computeAndersonMixingCoeff: 2.041048543000044901e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 1.296953778650142552e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.824924716597109697e-01
+ANDERSON mixing, L2 norm of total density difference: 1.583104438311307982e-01
+Fermi Energy computed: -5.329767003297037675e+00
+***********************Self-Consistent-Field Iteration: 20 complete**********************
+Wall time for the above scf iteration: 2.699125261500000050e+01 seconds
+Number of Chebyshev filtered subspace iterations: 8
+
+************************Begin Self-Consistent-Field Iteration: 21 ***********************
+Timer for computeAndersonMixingCoeff: 2.112308939999934410e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 9.689187377039672810e+00
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 8.878081519637420342e+02
+ANDERSON mixing, L2 norm of total density difference: 6.278125496696056871e+02
+Fermi Energy computed: -4.253339200867368719e-01
+***********************Self-Consistent-Field Iteration: 21 complete**********************
+Wall time for the above scf iteration: 2.625356152000000165e+01 seconds
+Number of Chebyshev filtered subspace iterations: 7
+
+************************Begin Self-Consistent-Field Iteration: 22 ***********************
+Timer for computeAndersonMixingCoeff: 2.240712540000004083e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 5.878422738674180081e+00
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.490929180193290620e+02
+ANDERSON mixing, L2 norm of total density difference: 1.055065260005582246e+02
+Fermi Energy computed: -4.665754454569192022e-01
+***********************Self-Consistent-Field Iteration: 22 complete**********************
+Wall time for the above scf iteration: 2.633075953000000169e+01 seconds
+Number of Chebyshev filtered subspace iterations: 7
+
+************************Begin Self-Consistent-Field Iteration: 23 ***********************
+Timer for computeAndersonMixingCoeff: 2.144693862000053741e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 1.967614044280690422e+00
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 8.549109675952154319e+00
+ANDERSON mixing, L2 norm of total density difference: 6.203175851074567149e+00
+Fermi Energy computed: -2.384279468496675602e-01
+***********************Self-Consistent-Field Iteration: 23 complete**********************
+Wall time for the above scf iteration: 2.104452136000000095e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 24 ***********************
+Timer for computeAndersonMixingCoeff: 1.985955293000074562e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 1.108963441442771536e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.577143288851080571e-01
+ANDERSON mixing, L2 norm of total density difference: 1.363301299791171983e-01
+Fermi Energy computed: -2.378931532729354759e-01
+***********************Self-Consistent-Field Iteration: 24 complete**********************
+Wall time for the above scf iteration: 2.115487724500000155e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 25 ***********************
+Timer for computeAndersonMixingCoeff: 2.162668769999982032e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 2.455801987993358818e-02
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 3.486838534166828568e-02
+ANDERSON mixing, L2 norm of total density difference: 3.015709399758439296e-02
+Fermi Energy computed: -2.374880276777275867e-01
+***********************Self-Consistent-Field Iteration: 25 complete**********************
+Wall time for the above scf iteration: 2.085131235700000119e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 26 ***********************
+Timer for computeAndersonMixingCoeff: 2.040356286999895019e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 2.176681716839217948e-02
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 3.045073841402796619e-02
+ANDERSON mixing, L2 norm of total density difference: 2.646735536091366844e-02
+Fermi Energy computed: -8.886352580276692947e+00
+***********************Self-Consistent-Field Iteration: 26 complete**********************
+Wall time for the above scf iteration: 2.270086387999999999e+01 seconds
+Number of Chebyshev filtered subspace iterations: 6
+
+************************Begin Self-Consistent-Field Iteration: 27 ***********************
+Timer for computeAndersonMixingCoeff: 2.142485993000036615e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 1.362518971548014513e+01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 6.739595860307714474e+02
+ANDERSON mixing, L2 norm of total density difference: 4.766587717631721262e+02
+Fermi Energy computed: -4.828572965893007662e-01
+***********************Self-Consistent-Field Iteration: 27 complete**********************
+Wall time for the above scf iteration: 2.591927436199999946e+01 seconds
+Number of Chebyshev filtered subspace iterations: 7
+
+************************Begin Self-Consistent-Field Iteration: 28 ***********************
+Timer for computeAndersonMixingCoeff: 2.059189935000063088e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 3.326051049305621454e+00
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.226904676887941577e+02
+ANDERSON mixing, L2 norm of total density difference: 8.678713463779533299e+01
+Fermi Energy computed: -1.975836059670319778e-01
+***********************Self-Consistent-Field Iteration: 28 complete**********************
+Wall time for the above scf iteration: 2.075282647099999878e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 29 ***********************
+Timer for computeAndersonMixingCoeff: 2.175137470999970901e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 2.976287031023934215e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 4.189457370101965505e-01
+ANDERSON mixing, L2 norm of total density difference: 3.633857285787578939e-01
+Fermi Energy computed: -1.975947390937880799e-01
+***********************Self-Consistent-Field Iteration: 29 complete**********************
+Wall time for the above scf iteration: 2.120272061200000024e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 30 ***********************
+Timer for computeAndersonMixingCoeff: 2.016936551000071631e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 2.979440316548204182e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 4.193254909440805034e-01
+ANDERSON mixing, L2 norm of total density difference: 3.637337717027542827e-01
+Fermi Energy computed: -1.975805020536009204e-01
+***********************Self-Consistent-Field Iteration: 30 complete**********************
+Wall time for the above scf iteration: 2.081617070100000078e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 31 ***********************
+Timer for computeAndersonMixingCoeff: 2.195317574999990029e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 2.992702471777092810e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 4.209391053850136122e-01
+ANDERSON mixing, L2 norm of total density difference: 3.652070722810162318e-01
+Fermi Energy computed: -1.975903254272785570e-01
+***********************Self-Consistent-Field Iteration: 31 complete**********************
+Wall time for the above scf iteration: 2.123066793899999993e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 32 ***********************
+Timer for computeAndersonMixingCoeff: 2.017322358000001259e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 3.006269173559243946e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 4.227854863801883689e-01
+ANDERSON mixing, L2 norm of total density difference: 3.668270102736835292e-01
+Fermi Energy computed: -1.975842521120797779e-01
+***********************Self-Consistent-Field Iteration: 32 complete**********************
+Wall time for the above scf iteration: 2.072924573299999906e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 33 ***********************
+Timer for computeAndersonMixingCoeff: 2.161425352000037492e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 3.003545741356959398e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 4.224136353668112576e-01
+ANDERSON mixing, L2 norm of total density difference: 3.665011252015746845e-01
+Fermi Energy computed: -2.199183383869650898e-01
+***********************Self-Consistent-Field Iteration: 33 complete**********************
+Wall time for the above scf iteration: 2.119126226799999912e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 34 ***********************
+Timer for computeAndersonMixingCoeff: 2.087235018999990643e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 3.001534720382084687e-01
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 4.221236096089383549e-01
+ANDERSON mixing, L2 norm of total density difference: 3.662515860483548380e-01
+Fermi Energy computed: -2.362206854766026598e-01
+***********************Self-Consistent-Field Iteration: 34 complete**********************
+Wall time for the above scf iteration: 2.192539401200000171e+01 seconds
+Number of Chebyshev filtered subspace iterations: 2
+
+************************Begin Self-Consistent-Field Iteration: 35 ***********************
+Timer for computeAndersonMixingCoeff: 2.058156200999974317e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 7.643816356290662750e-02
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.073183191790989810e-01
+ANDERSON mixing, L2 norm of total density difference: 9.316655644676534453e-02
+Fermi Energy computed: -2.370487565386779072e-01
+***********************Self-Consistent-Field Iteration: 35 complete**********************
+Wall time for the above scf iteration: 2.086227562399999869e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 36 ***********************
+Timer for computeAndersonMixingCoeff: 2.236949048000042239e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 1.255679730870489300e-02
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.792344532318991893e-02
+ANDERSON mixing, L2 norm of total density difference: 1.547454443441352231e-02
+Fermi Energy computed: -2.370667451067103026e-01
+***********************Self-Consistent-Field Iteration: 36 complete**********************
+Wall time for the above scf iteration: 2.135360365200000032e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 37 ***********************
+Timer for computeAndersonMixingCoeff: 2.234198890000016036e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 1.460534025258541403e-02
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 2.076634672269681708e-02
+ANDERSON mixing, L2 norm of total density difference: 1.795211853934031501e-02
+Fermi Energy computed: -2.372683092978851438e-01
+***********************Self-Consistent-Field Iteration: 37 complete**********************
+Wall time for the above scf iteration: 2.132979960200000136e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 38 ***********************
+Timer for computeAndersonMixingCoeff: 2.320100420000017039e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 2.667248667555610284e-02
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 3.756914295577129526e-02
+ANDERSON mixing, L2 norm of total density difference: 3.257961055544478235e-02
+Fermi Energy computed: -2.374326475521257862e-01
+***********************Self-Consistent-Field Iteration: 38 complete**********************
+Wall time for the above scf iteration: 2.149662086700000074e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 39 ***********************
+Timer for computeAndersonMixingCoeff: 2.326077410000038981e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 3.594533462339021684e-02
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 5.060577377552241685e-02
+ANDERSON mixing, L2 norm of total density difference: 4.389197774426921439e-02
+Fermi Energy computed: -2.378165086041103826e-01
+***********************Self-Consistent-Field Iteration: 39 complete**********************
+Wall time for the above scf iteration: 2.156447590399999825e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 40 ***********************
+Timer for computeAndersonMixingCoeff: 2.426626787000031982e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 5.344234636030840979e-02
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 7.525174983395942208e-02
+ANDERSON mixing, L2 norm of total density difference: 6.526450121454994979e-02
+Fermi Energy computed: -2.381695575355102790e-01
+***********************Self-Consistent-Field Iteration: 40 complete**********************
+Wall time for the above scf iteration: 2.172017756099999986e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 41 ***********************
+Timer for computeAndersonMixingCoeff: 2.481169839000017419e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 7.453470865861312744e-02
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.050133838046251739e-01
+ANDERSON mixing, L2 norm of total density difference: 9.105831530651621597e-02
+Fermi Energy computed: -2.381742650432431829e-01
+***********************Self-Consistent-Field Iteration: 41 complete**********************
+Wall time for the above scf iteration: 2.165277290299999891e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 42 ***********************
+Timer for computeAndersonMixingCoeff: 2.672432419000074333e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 7.285950588798649485e-02
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.027000815299273784e-01
+ANDERSON mixing, L2 norm of total density difference: 8.903879588273660994e-02
+Fermi Energy computed: -2.379256209128993160e-01
+***********************Self-Consistent-Field Iteration: 42 complete**********************
+Wall time for the above scf iteration: 2.223355843399999898e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 43 ***********************
+Timer for computeAndersonMixingCoeff: 2.031720799000027000e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 5.963197889528925461e-02
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 8.411460415193953988e-02
+ANDERSON mixing, L2 norm of total density difference: 7.290829698534216641e-02
+Fermi Energy computed: -2.377274507325809472e-01
+***********************Self-Consistent-Field Iteration: 43 complete**********************
+Wall time for the above scf iteration: 2.068263779200000130e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 44 ***********************
+Timer for computeAndersonMixingCoeff: 2.202448557000025176e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 4.891624933670464526e-02
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 6.899883530018292854e-02
+ANDERSON mixing, L2 norm of total density difference: 5.980651604111556635e-02
+Fermi Energy computed: -2.378750796320976413e-01
+***********************Self-Consistent-Field Iteration: 44 complete**********************
+Wall time for the above scf iteration: 2.105953644099999877e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 45 ***********************
+Timer for computeAndersonMixingCoeff: 1.968226571999821317e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 2.121884102298450189e-02
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 2.990299397759598257e-02
+ANDERSON mixing, L2 norm of total density difference: 2.592709261740343621e-02
+Fermi Energy computed: -2.376265437424213145e-01
+***********************Self-Consistent-Field Iteration: 45 complete**********************
+Wall time for the above scf iteration: 2.047744639400000111e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 46 ***********************
+Timer for computeAndersonMixingCoeff: 2.129273962999832293e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 1.029710503547922847e-03
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.409210489943862324e-03
+ANDERSON mixing, L2 norm of total density difference: 1.234134904717619843e-03
+Fermi Energy computed: -2.375915662111497684e-01
+***********************Self-Consistent-Field Iteration: 46 complete**********************
+Wall time for the above scf iteration: 2.080862653200000167e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 47 ***********************
+Timer for computeAndersonMixingCoeff: 2.050917149000042627e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 8.005916295421246134e-05
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.454159161578116454e-04
+ANDERSON mixing, L2 norm of total density difference: 1.173781458469694164e-04
+Fermi Energy computed: -2.376039541302510105e-01
+***********************Self-Consistent-Field Iteration: 47 complete**********************
+Wall time for the above scf iteration: 2.039277053700000053e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 48 ***********************
+Timer for computeAndersonMixingCoeff: 2.127999299000066458e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 5.079212913118839217e-05
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.806511587798438352e-04
+ANDERSON mixing, L2 norm of total density difference: 1.326926553170515010e-04
+Fermi Energy computed: -2.376062954153741746e-01
+***********************Self-Consistent-Field Iteration: 48 complete**********************
+Wall time for the above scf iteration: 2.039824318999999875e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 49 ***********************
+Timer for computeAndersonMixingCoeff: 2.100873848999981419e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 4.571875184352021968e-05
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.555664531288324375e-04
+ANDERSON mixing, L2 norm of total density difference: 1.146541006881450405e-04
+Fermi Energy computed: -2.376068725443467589e-01
+***********************Self-Consistent-Field Iteration: 49 complete**********************
+Wall time for the above scf iteration: 2.052329263700000084e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 50 ***********************
+Timer for computeAndersonMixingCoeff: 2.140091618000042217e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 5.342547419047030075e-05
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.679938965807301933e-04
+ANDERSON mixing, L2 norm of total density difference: 1.246519766807844892e-04
+Fermi Energy computed: -2.376070762595330621e-01
+***********************Self-Consistent-Field Iteration: 50 complete**********************
+Wall time for the above scf iteration: 2.043283193599999947e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 51 ***********************
+Timer for computeAndersonMixingCoeff: 2.075605937000091217e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 7.241314680751312631e-05
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 2.034465198078192687e-04
+ANDERSON mixing, L2 norm of total density difference: 1.526992964169773717e-04
+Fermi Energy computed: -2.376501241523540364e-01
+***********************Self-Consistent-Field Iteration: 51 complete**********************
+Wall time for the above scf iteration: 2.033562886600000041e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 52 ***********************
+Timer for computeAndersonMixingCoeff: 2.229903044999900885e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 5.898309086871058080e-05
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.312175739078778056e-04
+ANDERSON mixing, L2 norm of total density difference: 1.017277167508834411e-04
+Fermi Energy computed: -2.376591830678301265e-01
+***********************Self-Consistent-Field Iteration: 52 complete**********************
+Wall time for the above scf iteration: 2.051705507400000172e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 53 ***********************
+Timer for computeAndersonMixingCoeff: 2.022936256999855686e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 5.695365842882882878e-05
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.630901018090918496e-04
+ANDERSON mixing, L2 norm of total density difference: 1.221517509422760032e-04
+Fermi Energy computed: -2.376574270625359808e-01
+***********************Self-Consistent-Field Iteration: 53 complete**********************
+Wall time for the above scf iteration: 2.030714134400000148e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 54 ***********************
+Timer for computeAndersonMixingCoeff: 2.188686196999924505e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 5.302434312493454501e-05
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.502042273109610972e-04
+ANDERSON mixing, L2 norm of total density difference: 1.126341219744568945e-04
+Fermi Energy computed: -2.376324811894481304e-01
+***********************Self-Consistent-Field Iteration: 54 complete**********************
+Wall time for the above scf iteration: 2.035021413999999851e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 55 ***********************
+Timer for computeAndersonMixingCoeff: 2.057961479999903531e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 3.132181617123664747e-05
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.165558469533338123e-04
+ANDERSON mixing, L2 norm of total density difference: 8.534143667431933887e-05
+Fermi Energy computed: -2.376347317366172274e-01
+***********************Self-Consistent-Field Iteration: 55 complete**********************
+Wall time for the above scf iteration: 2.011959664400000136e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 56 ***********************
+Timer for computeAndersonMixingCoeff: 2.026377566000064689e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 3.410845933565809126e-05
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.099517395792741026e-04
+ANDERSON mixing, L2 norm of total density difference: 8.140261677231498780e-05
+Fermi Energy computed: -2.376331017721103056e-01
+***********************Self-Consistent-Field Iteration: 56 complete**********************
+Wall time for the above scf iteration: 2.008418445199999880e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 57 ***********************
+Timer for computeAndersonMixingCoeff: 2.045115548000012495e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 3.041358321884974893e-05
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.216420848037581847e-04
+ANDERSON mixing, L2 norm of total density difference: 8.866166826654740189e-05
+Fermi Energy computed: -2.376348946271784890e-01
+***********************Self-Consistent-Field Iteration: 57 complete**********************
+Wall time for the above scf iteration: 2.000975770699999856e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 58 ***********************
+Timer for computeAndersonMixingCoeff: 2.054480599000044094e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 2.435719180288070762e-05
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.041309977156869309e-04
+ANDERSON mixing, L2 norm of total density difference: 7.561923524403931808e-05
+Fermi Energy computed: -2.376318808580357989e-01
+***********************Self-Consistent-Field Iteration: 58 complete**********************
+Wall time for the above scf iteration: 2.020401497399999968e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 59 ***********************
+Timer for computeAndersonMixingCoeff: 2.123859715999969922e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 2.129738052042329631e-05
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 9.793739104540877618e-05
+ANDERSON mixing, L2 norm of total density difference: 7.087069557233447576e-05
+Fermi Energy computed: -2.376363677146180187e-01
+***********************Self-Consistent-Field Iteration: 59 complete**********************
+Wall time for the above scf iteration: 2.029554951900000148e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 60 ***********************
+Timer for computeAndersonMixingCoeff: 2.075020808000090256e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 8.708781665854122862e-06
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 1.556379623411892815e-05
+ANDERSON mixing, L2 norm of total density difference: 1.261099978829377952e-05
+Fermi Energy computed: -2.376346089930256034e-01
+***********************Self-Consistent-Field Iteration: 60 complete**********************
+Wall time for the above scf iteration: 2.040148723800000141e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 61 ***********************
+Timer for computeAndersonMixingCoeff: 2.126940671000056682e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 4.442183248696107571e-06
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 8.446252464197007438e-06
+ANDERSON mixing, L2 norm of total density difference: 6.748043149830560858e-06
+Fermi Energy computed: -2.376345544609152205e-01
+***********************Self-Consistent-Field Iteration: 61 complete**********************
+Wall time for the above scf iteration: 2.032554064300000007e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 62 ***********************
+Timer for computeAndersonMixingCoeff: 2.161524573999940912e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 2.878158530027788133e-06
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 9.253291873755624164e-06
+ANDERSON mixing, L2 norm of total density difference: 6.852269953266713075e-06
+Fermi Energy computed: -2.376340725958362432e-01
+***********************Self-Consistent-Field Iteration: 62 complete**********************
+Wall time for the above scf iteration: 2.036209885799999952e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+************************Begin Self-Consistent-Field Iteration: 63 ***********************
+Timer for computeAndersonMixingCoeff: 2.062775391000059244e+00
+Anderson mixing parameter for Rho: 5.000000000000000000e-01
+ANDERSON mixing, L2 norm of electron-density difference: 6.043685567665914535e-07
+ANDERSON mixing, L2 norm of Kinetic energy density difference: 9.659968376204368193e-07
+ANDERSON mixing, L2 norm of total density difference: 8.057329714926706059e-07
+Fermi Energy computed: -2.376339563628747653e-01
+***********************Self-Consistent-Field Iteration: 63 complete**********************
+Wall time for the above scf iteration: 2.092960624299999850e+01 seconds
+Number of Chebyshev filtered subspace iterations: 1
+
+SCF iterations converged to the specified tolerance after: 63 iterations.
+GS Fermi energy spin up: -2.376339563628747653e-01
+ Printing KS eigen values (spin split if this is a spin polarized calculation ) and fractional occupancies for kPoint 0
+  
+0 : -1.211424534565781475e+00       1.000000000000000000e+00
+1 : -7.976977590741719526e-01       1.000000000000000000e+00
+2 : -4.982850157469732588e-01       1.000000000000000000e+00
+3 : -4.665108815203586334e-01       1.000000000000000000e+00
+4 : -4.665108755414893449e-01       1.000000000000000000e+00
+5 : -2.376339574718409897e-01       5.000001750919259580e-01
+6 : -2.376339552539085409e-01       4.999998249080740420e-01
+7 : 4.557334995079550567e-03       3.733225721676906507e-67
+8 : 1.224417614093795299e-02       2.909024313607012061e-69
+9 : 1.547022029929377360e-02       3.792382296066552404e-70
+10 : 1.985251571052074060e-02       2.382000038063956864e-71
+11 : 2.937362414479458353e-02       5.827796712830733769e-74
+12 : 3.130785671279152221e-02       1.717851325396685794e-74
+13 : 3.885295497272554799e-02       1.463948275218696197e-76
+14 : 4.265633322264205524e-02       1.325378862297721205e-77
+15 : 6.007153511631119908e-02       2.216771217085833066e-82
+============================================================================================================
+
+Energy computations (Hartree)
+-------------------------------------------------------------------------------
+Band energy                                         :  -7.3561260456232995e+00
+Exchange energy                                     :  -6.2881056870454648e+00
+Correlation energy                                  :  -4.3065346774470498e-01
+Total internal energy                               :  -3.1731200806702955e+01
+Total internal energy per atom                      :  -1.5865600403351477e+01
+-------------------------------------------------------------------------------
+Total entropic energy: 4.390132826752334710e-03
+Total free energy: -3.173559093952970755e+01
+Total scf solve, wall time: 1354.02s.
+
+Ion forces (Hartree/Bohr)
+--------------------------------------------------------------------------------------------
+   0     -6.961996531638858787e-02   1.651281161865556469e-10   4.898861226390779042e-10
+   1     6.961996531638858787e-02   -1.651281161865552333e-10   -4.898861226390779042e-10
+--------------------------------------------------------------------------------------------
+ Maximum absolute force atom id: 0, Force vec: -6.961996531638858787e-02,1.651281161865556469e-10,4.898861226390779042e-10
+ Sum of absolute value of all force components over all atoms: 1.392399319428056503e-01
+ Sum of all forces in each component: 0.000000000000000000e+00 -4.135903062765138374e-25 0.000000000000000000e+00
+Force and Stress computation, wall time: 24.231s.
+
+------------------DFT-FE ground-state solve completed---------------------------
+
+
++---------------------------------------------+------------+------------+
+| Total wallclock time elapsed since start    | 1.490e+03s |            |
+|                                             |            |            |
+| Section                         | no. calls |  wall time | % of total |
++---------------------------------+-----------+------------+------------+
+| Atomic system initialization    |         1 | 5.387e-02s | 0.000e+00% |
+| Force and Stress computation    |         1 | 2.423e+01s |  1.63e+00% |
+| Init local PSP                  |         1 | 3.132e+00s |  2.10e-01% |
+| KSDFT problem initialization    |         1 | 9.374e+01s |  6.29e+00% |
+| Nuclear self-potential solve    |         1 | 1.213e+01s |  8.14e-01% |
+| Total scf solve                 |         1 | 1.354e+03s |  9.09e+01% |
+| initialize density              |         1 | 2.618e+00s |  1.76e-01% |
++---------------------------------+-----------+------------+------------+
+
+=============================================================================================
+DFT-FE Program ends. Elapsed wall time since start of the program: 1.493196369062000031e+03 seconds.
+=============================================================================================

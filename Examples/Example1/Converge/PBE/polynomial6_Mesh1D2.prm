@@ -1,0 +1,46 @@
+set SOLVER MODE = GS
+set USE GPU     = true
+
+subsection Geometry
+  set NATOMS                  = 2
+  set NATOM TYPES             = 1
+  set ATOMIC COORDINATES FILE = coordinates.inp
+  set DOMAIN VECTORS FILE     = domainVectors.inp
+  subsection Optimization
+    set ION FORCE = true
+  end
+end
+
+subsection Boundary conditions
+  set PERIODIC1 = false
+  set PERIODIC2 = false
+  set PERIODIC3 = false
+end
+
+subsection Finite element mesh parameters
+  set POLYNOMIAL ORDER         = 6
+  set USE HIGH QUADRATURE RULE = true
+  subsection Auto mesh generation parameters
+    set ATOM BALL RADIUS      = 6
+    set MESH SIZE AROUND ATOM = 1.2
+  end
+end
+
+subsection DFT functional parameters
+  set EXCHANGE CORRELATION TYPE       = GGA-PBE
+  set PSEUDOPOTENTIAL CALCULATION     = true
+  set PSEUDOPOTENTIAL FILE NAMES LIST = pseudo.inp
+end
+
+subsection SCF parameters
+  set TEMPERATURE      = 500
+  set TOLERANCE        = 1e-6
+  set MIXING PARAMETER = 0.5
+  subsection Eigen-solver parameters
+    set NUMBER OF KOHN-SHAM WAVEFUNCTIONS = 16
+    set OVERLAP COMPUTE COMMUN CHEBY      = true
+    set USE SINGLE PREC CHEBY             = true
+    set TENSOR OP TYPE SINGLE PREC CHEBY  = TF32
+    set COMMUN PREC CHEBY                 = BF16
+  end
+end

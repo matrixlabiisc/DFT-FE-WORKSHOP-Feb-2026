@@ -1,0 +1,53 @@
+set SOLVER MODE = GS
+set USE GPU     = true
+
+subsection Geometry
+  set NATOMS                  = 2
+  set NATOM TYPES             = 1
+  set ATOMIC COORDINATES FILE = coordinates.inp
+  set DOMAIN VECTORS FILE     = domainVectors.inp
+  subsection Optimization
+    set ION FORCE = true
+  end
+end
+
+subsection Boundary conditions
+  set PERIODIC1 = false
+  set PERIODIC2 = false
+  set PERIODIC3 = false
+end
+
+subsection Finite element mesh parameters
+  set POLYNOMIAL ORDER         = 6
+  set USE HIGH QUADRATURE RULE = true
+  subsection Auto mesh generation parameters
+    set ATOM BALL RADIUS      = 6
+    set MESH SIZE AROUND ATOM = 1.4
+  end
+end
+
+subsection DFT functional parameters
+  set EXCHANGE CORRELATION TYPE       = GGA-PBE
+  set PSEUDOPOTENTIAL CALCULATION     = true
+  set PSEUDOPOTENTIAL FILE NAMES LIST = pseudo.inp
+end
+
+subsection SCF parameters
+  set TEMPERATURE      = 500
+  set TOLERANCE        = 1e-6
+  set MIXING PARAMETER = 0.5
+end
+
+subsection Post-processing Options
+  set DELTA ENERGY                       = 0.01
+  set DOS SMEAR TEMPERATURE              = 500
+  set PRINT KINETIC ENERGY               = false
+  set READ ATOMIC WFC PDOS FROM PSP FILE = false
+  set WRITE DENSITY FE MESH              = true
+  set WRITE DENSITY OF STATES            = false
+  set WRITE DENSITY QUAD DATA            = false
+  set WRITE LOCALIZATION LENGTHS         = false
+  set WRITE LOCAL DENSITY OF STATES      = false
+  set WRITE PROJECTED DENSITY OF STATES  = false
+  set WRITE WFC FE MESH                  = false
+end

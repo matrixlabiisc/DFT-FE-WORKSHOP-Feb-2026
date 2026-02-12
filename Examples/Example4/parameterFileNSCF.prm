@@ -1,0 +1,51 @@
+set SOLVER MODE = NSCF 
+set USE GPU = true
+
+subsection Geometry
+  set NATOMS=30
+  set NATOM TYPES=2
+  set ATOMIC COORDINATES FILE      = coordinates.inp 
+  set DOMAIN VECTORS FILE = domainVectors.inp
+end
+
+subsection Boundary conditions
+  set PERIODIC1                       = false
+  set PERIODIC2                       = false
+  set PERIODIC3                       = false
+  set MULTIPOLE BOUNDARY CONDITIONS   = true
+end
+
+subsection DFT functional parameters
+  set EXCHANGE CORRELATION TYPE   = GGA-PBE
+  set PSEUDOPOTENTIAL CALCULATION = true
+  set PSEUDOPOTENTIAL FILE NAMES LIST = pseudoNSCF.inp
+  set SPIN POLARIZATION = 0
+  set NONCOLLINEAR SPIN = true
+  set SPIN-ORBIT COUPLING = true
+end
+
+subsection SCF parameters
+  set MIXING METHOD                    = ANDERSON_WITH_RESTA
+  set MIXING PARAMETER                 = 0.3
+  set TEMPERATURE                      = 10
+  set TOLERANCE                        = 1e-6
+  subsection Eigen-solver parameters
+    set CHEBYSHEV FILTER TOLERANCE = 1e-6
+  end
+end
+
+subsection Finite element mesh parameters
+  set POLYNOMIAL ORDER=6
+  set POLYNOMIAL ORDER ELECTROSTATICS = 0
+  subsection Auto mesh generation parameters
+    set ATOM BALL RADIUS = 4
+    set MESH SIZE AROUND ATOM  = 0.8
+  end
+end
+subsection SCF Checkpointing and Restart
+  set LOAD QUAD DATA                      = true
+  set MAG PHI                             = 45
+  set MAG THETA                           = 0
+  set RESTART NONCOLLINEAR FROM COLLINEAR = true
+  set SAVE QUAD DATA                      = false
+end
